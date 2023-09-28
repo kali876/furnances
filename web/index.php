@@ -1,4 +1,4 @@
-<form action="action.php" method="get">
+<form action="action.php" method="post">
     <label>1</label>
     <input name="step1-start-temperature" type="number">
     <input name="step1-end-temperature" type="number">
