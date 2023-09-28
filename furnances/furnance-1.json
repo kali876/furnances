@@ -1,0 +1,5 @@
+{
+    "furnance_id" : 1,
+    "thermometers_ids" : [87, 88, 89, 90],
+    "heaters_ids" : [1, 2, 3]
+}
