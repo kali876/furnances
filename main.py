@@ -22,7 +22,7 @@ logFilename = f"bakings-script.log"
 
 logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
 
-logHandler = handlers.RotatingFileHandler(logFilename, maxsize=500, backupCount=2)
+logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
 logHandler.setLevel(logging.INFO)
 logging.addHandler(logHandler)
 
