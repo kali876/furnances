@@ -24,7 +24,6 @@ logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime
 logger = logging.getLogger('furnances')
 
 logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
-logHandler.setLevel(logging.INFO)
 logger.addHandler(logHandler)
 
 
