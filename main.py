@@ -20,7 +20,7 @@ def getCurrentTimestamp():
 
 logFilename = f"bakings-script.log"
 
-logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %I:%M:%S')
+logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
 
 logHandler = handlers.RotatingFileHandler(logFilename, maxsize=500, backupCount=2)
 logHandler.setLevel(logging.INFO)
