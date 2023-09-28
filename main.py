@@ -27,9 +27,7 @@ logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backu
 logHandler.setLevel(logging.INFO)
 logger.addHandler(logHandler)
 
-logger.info("==================================================")
 
-logger.info('START ITERATION')
 
 
 
@@ -366,6 +364,10 @@ class BakingProcess:
             json.dump(self.toJSON(), outfile, indent=4, sort_keys=True)
 
 def main():
+
+    logger.info("==================================================")
+
+    logger.info('START ITERATION')
 
     files = [file for file in os.listdir("./bakings") if file.endswith('.json')]
 
