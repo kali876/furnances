@@ -6,6 +6,8 @@ import logging
 from sys import maxsize
 import requests
 import logging.handlers as handlers
+import time
+
 
 
 SERVER_URL = "192.168.9.100"
@@ -404,4 +406,12 @@ def main():
 
         process.addToRaport(raportLine)
 
+main()
+time.sleep(10)
+main()
+time.sleep(10)
+main()
+time.sleep(10)
+main()
+time.sleep(10)
 main()
