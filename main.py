@@ -21,14 +21,15 @@ def getCurrentTimestamp():
 logFilename = f"bakings-script.log"
 
 logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
+logger = logging.getLogger('furnances')
 
 logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
 logHandler.setLevel(logging.INFO)
-logging.addHandler(logHandler)
+logger.addHandler(logHandler)
 
-logging.info("==================================================")
+logger.info("==================================================")
 
-logging.info('START ITERATION')
+logger.info('START ITERATION')
 
 
 
@@ -154,13 +155,13 @@ class Furnance:
     def on(self):
         for heater in self.getHeaters():
             heater.on()
-        logging.info(f"Turn ON heaters")
+        logger.info(f"Turn ON heaters")
 
 
     def off(self):
         for heater in self.getHeaters():
             heater.off()
-        logging.info(f"Turn OFF heaters")
+        logger.info(f"Turn OFF heaters")
 
     def __load(self):
 
@@ -342,10 +343,10 @@ class BakingProcess:
         file.close()
 
     def createFinalRaport(self):
-        logging.info(f"Creating raport... TODO")
+        logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
-        logging.info(f"Deleting file ./bakings/{self.getProcessFileName()}")
+        logger.info(f"Deleting file ./bakings/{self.getProcessFileName()}")
         os.remove(f"./bakings/{self.getProcessFileName()}")
 
 
@@ -370,28 +371,28 @@ def main():
 
     for file in files:
 
-        logging.info("==================================================")
+        logger.info("==================================================")
 
         process = BakingProcess(file)
 
-        logging.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
+        logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
         if process.isFinished() == True:
-            logging.info(f"Process is finished!")
+            logger.info(f"Process is finished!")
             process.getFurnance().off()
             process.createFinalRaport()
             process.deleteProcessFile()
             continue
 
-        logging.info(f"Process is running")
+        logger.info(f"Process is running")
 
         currentTemperature = process.getFurnance().getTemperature()
 
-        logging.info(f"Current temperature in furnance : {currentTemperature}")
+        logger.info(f"Current temperature in furnance : {currentTemperature}")
 
         desiredTemperature = process.getDesiredTemperature()
 
-        logging.info(f"Desired temperature : {desiredTemperature}")
+        logger.info(f"Desired temperature : {desiredTemperature}")
 
         if currentTemperature < desiredTemperature:
             process.getFurnance().on()
