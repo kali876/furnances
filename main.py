@@ -20,7 +20,7 @@ def getCurrentTimestamp():
 
 logFilename = f"bakings-script.log"
 
-logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
+logging.basicConfig(filename=logFilename, level=logging.INFO, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
 logger = logging.getLogger('furnances')
 
 logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
@@ -51,7 +51,7 @@ class Thermometer:
             timeout=10,
         )
 
-        return int(json.loads(response.text)["Results"]["state"])
+        return float(json.loads(response.text)["Results"]["state"])
 
     def toJSON(self):
 
