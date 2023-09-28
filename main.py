@@ -3,22 +3,32 @@ from datetime import datetime
 import json
 import os
 import logging
+from sys import maxsize
 import requests
+import logging.handlers as handlers
 
 
 SERVER_URL = "192.168.9.100"
 AUTH_TOKEN = "YWRtaW46d3lXYTJ4ODJ4eFQj"
 headers = {"Authorization": f"Basic {AUTH_TOKEN}"}
 
-logging.basicConfig(filename='bakings-script.log', level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %I:%M:%S')
+def getCurrentTimestamp():
+    timestamp = datetime.timestamp(datetime.now())
+    return int(timestamp)
+
+logFilename = f"bakings-script.log"
+
+logging.basicConfig(filename=logFilename, level=logging.DEBUG, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %I:%M:%S')
+
+logHandler = handlers.RotatingFileHandler(logFilename, maxsize=500, backupCount=2)
+logHandler.setLevel(logging.INFO)
+logging.addHandler(logHandler)
 
 logging.info("==================================================")
 
 logging.info('START ITERATION')
 
-def getCurrentTimestamp():
-    timestamp = datetime.timestamp(datetime.now())
-    return int(timestamp)
+
 
 class Thermometer:
 
