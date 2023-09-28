@@ -71,8 +71,6 @@ class Heater:
             verify=False,
             timeout=10,
         )
-
-        
         
     def off(self):
 
@@ -82,8 +80,6 @@ class Heater:
             verify=False,
             timeout=10,
         )
-
-        pass
 
     def toJSON(self):
 
