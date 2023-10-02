@@ -8,7 +8,7 @@ import requests
 import logging.handlers as handlers
 import time
 
-# os.chdir("/root/furnances")
+os.chdir("/root/furnances")
 
 SERVER_URL = "192.168.9.100"
 AUTH_TOKEN = "YWRtaW46d3lXYTJ4ODJ4eFQj"
