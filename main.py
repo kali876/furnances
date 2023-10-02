@@ -76,6 +76,44 @@ class Heater:
     def on(self):
 
         requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/255",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        
+    def off(self):
+
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def toJSON(self):
+
+        json = {
+            "id" : self.getId()
+        }
+
+        return json
+
+class Fan:
+
+    __id = None
+
+    def __init__(self, id):
+        self.__setId(id)
+
+    def getId(self):
+        return self.__id
+    def __setId(self, id):
+        self.__id = id
+
+    def on(self):
+
+        requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/1",
             headers=headers,
             verify=False,
@@ -104,6 +142,7 @@ class Furnance:
     __id = None
     __thermometers = None
     __heaters = None
+    __fans = None
 
     def __init__(self, id):
         self.__setId(id)
@@ -136,6 +175,18 @@ class Furnance:
             self.__heaters = []
         self.__heaters.append(heater)
 
+    def getFans(self):
+        return self.__fans
+    def __setFans(self, fans):
+        if self.__fans == None:
+            self.__fans = []
+        self.__fans = fans
+    def __addFans(self, fan):
+        if self.__fans == None:
+            self.__fans = []
+        self.__fans.append(fan)
+
+
     def getTemperature(self):
 
         temperature = 0
@@ -159,6 +210,7 @@ class Furnance:
         for heater in self.getHeaters():
             heater.off()
         logger.info(f"Turn OFF heaters")
+
 
     def __load(self):
 
