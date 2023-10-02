@@ -8,7 +8,7 @@ import requests
 import logging.handlers as handlers
 import time
 
-os.chdir("/root/furnances")
+# os.chdir("/root/furnances")
 
 SERVER_URL = "192.168.9.100"
 AUTH_TOKEN = "YWRtaW46d3lXYTJ4ODJ4eFQj"
@@ -20,12 +20,15 @@ def getCurrentTimestamp():
 
 logFilename = f"bakings-script.log"
 
-logging.basicConfig(filename=logFilename, level=logging.INFO, format='%(asctime)s.%(msecs)03d [%(levelname)s] %(message)s', datefmt='%m-%d-%Y %H:%M:%S')
 logger = logging.getLogger('furnances')
 
-logHandler = handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
-logger.addHandler(logHandler)
+logFormatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+logger.setLevel(logging.INFO)
 
+logHandler = logging.handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
+
+logHandler.setFormatter(logFormatter)
+logger.addHandler(logHandler)
 
 
 
