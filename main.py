@@ -181,6 +181,7 @@ class Furnance:
     __thermometers = None
     __heaters = None
     __cyrcfans = None
+    __exhaustfans = None
 
     def __init__(self, id):
         self.__setId(id)
@@ -214,16 +215,26 @@ class Furnance:
         self.__heaters.append(heater)
 
     def getCyrcFans(self):
-        return self.__fans
+        return self.__cyrcfans
     def __setCyrcyFans(self, fans):
-        if self.__fans == None:
-            self.__fans = []
-        self.__fans = fans
+        if self.__cyrcfans == None:
+            self.__cyrcfans = []
+        self.__cyrcfans = fans
     def __addCyrcFans(self, fan):
+        if self.__cyrcfans == None:
+            self.__cyrcfans = []
+        self.__cyrcfans.append(fan)
+
+    def getExhaustFans(self):
+        return self.__exhaustfans
+    def __setExhaustFans(self, exfans):
+        if self.__exhaustfans == None:
+            self.__exhaustfans = []
+        self.__exhaustfans = exfans
+    def __addExhaustFans(self, exfan):
         if self.__fans == None:
             self.__fans = []
-        self.__fans.append(fan)
-
+        self.__fans.append(exfan)
 
     def getTemperature(self):
 
@@ -274,6 +285,8 @@ class Furnance:
             self.__addHeater(Heater(heatersId))
         for cyrcfanId in data["cyrc_fans_ids"]:
             self.__addCyrcFans(CyrcFan(cyrcfanId))
+        for exhaustfanId in data["exhaust_fans_ids"]:
+            self.__addExhaustFans(ExhaustFan(exhaustfanId))
 
     def toJSON(self):
 
@@ -282,6 +295,7 @@ class Furnance:
             "thermometers" : [thermometer.toJSON() for thermometer in self.getThermometers()],
             "heaters" : [heater.toJSON() for heater in self.getHeaters()],
             "cyrcfan" : [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
+
         }
 
         return json
