@@ -294,7 +294,7 @@ class Furnance:
         fan = 0
         for cyrcfan in self.getCyrcFans():
             fan = fan + cyrcfan.status()
-            logger.info(f" Status wentyaltorów cyrk {cyrcfan.status()}....")
+            logger.info(f" Status wentyaltorów cyrk {fan}....")
 
     def __load(self):
 
