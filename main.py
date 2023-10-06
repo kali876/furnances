@@ -527,7 +527,8 @@ def main():
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
-            process.getFurnance().off()
+            process.getFurnance().heateroff()
+            process.getFurnance().cyclefanoff()
             process.createFinalRaport()
             process.deleteProcessFile()
             continue
@@ -547,38 +548,38 @@ def main():
 
 
         if stepsLeft < 1 or differenceTemperature > 1:
-            process.getFurnance().off()
+            process.getFurnance().heateroff()
             break
         elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1:
-            process.getFurnance().on(5)
+            process.getFurnance().heateron(5)
         elif differenceTemperature < -0.2 and differenceTemperature > -0.8 and currentTrend == 1:
-            process.getFurnance().on(15)
+            process.getFurnance().heateron(15)
         elif differenceTemperature < -0.8 and differenceTemperature > -3 and currentTrend == 1:
-            process.getFurnance().on(20)
+            process.getFurnance().heateron(20)
         elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 1:
-            process.getFurnance().on(30)
+            process.getFurnance().heateron(30)
         elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 1:
-            process.getFurnance().on(40)
+            process.getFurnance().heateron(40)
         if differenceTemperature != 0 and differenceTemperature > -0.3 and currentTrend == 0:
-            process.getFurnance().on(5)
+            process.getFurnance().heateron(5)
         elif differenceTemperature < -0.3 and differenceTemperature > -1.5 and currentTrend == 0:
-            process.getFurnance().on(15)
+            process.getFurnance().heateron(15)
         elif differenceTemperature < -1.5 and differenceTemperature > -3 and currentTrend == 0:
-            process.getFurnance().on(20)
+            process.getFurnance().heateron(20)
         elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 0:
-            process.getFurnance().on(30)
+            process.getFurnance().heateron(30)
         elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 0:
-            process.getFurnance().on(40)
+            process.getFurnance().heateron(40)
         if differenceTemperature != 0 and differenceTemperature > -0.3 and currentTrend == 2:
-            process.getFurnance().on(5)
+            process.getFurnance().heateron(5)
         elif differenceTemperature < -0.3 and differenceTemperature > -1.5 and currentTrend == 2:
-            process.getFurnance().on(15)
+            process.getFurnance().heateron(15)
         elif differenceTemperature < -1.5 and differenceTemperature > -3 and currentTrend == 2:
-            process.getFurnance().on(20)
+            process.getFurnance().heateron(20)
         elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 2:
-            process.getFurnance().on(30)
+            process.getFurnance().heateron(30)
         elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 2:
-            process.getFurnance().on(40)
+            process.getFurnance().heateron(40)
 
 
         currentDate = datetime.fromtimestamp(getCurrentTimestamp())
