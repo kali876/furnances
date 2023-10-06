@@ -291,8 +291,9 @@ class Furnance:
         logger.info(f"Turn OFF cycle fans")
 
     def cyrcfanstatus(self):
+        fan = 0
         for cyrcfan in self.getCyrcFans():
-            cyrcfan.status()
+            fan = fan + cyrcfan.status()
             logger.info(f" Status wentyaltorów cyrk {cyrcfan.status()}....")
 
     def __load(self):
@@ -550,8 +551,8 @@ def main():
         logger.info(f"Process is running")
 
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        if cyrcfanStatus[0] < 1 or cyrcfanStatus[1] < 1:
-            process.getFurnance().cyrcfanon()
+        # if cyrcfanStatus < 1:
+        #     process.getFurnance().cyrcfanon()
 
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
