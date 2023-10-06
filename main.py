@@ -569,9 +569,9 @@ def main():
         if stepsLeft < 1 or differenceTemperature > 1:
             process.getFurnance().heateroff()
             break
-        elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1 or currentTemperature <= 250:
+        elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1:
             process.getFurnance().heateron(5)
-        elif differenceTemperature < -0.2 and differenceTemperature > -0.7 and currentTrend == 1 or currentTemperature > 250:
+        elif differenceTemperature < -0.2 and differenceTemperature > -0.7 and currentTrend == 1:
             process.getFurnance().heateron(15)
         elif differenceTemperature < -0.8 and differenceTemperature > -3 and currentTrend == 1:
             process.getFurnance().heateron(20)
