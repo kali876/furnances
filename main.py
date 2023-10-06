@@ -291,7 +291,7 @@ class Furnance:
         logger.info(f"Turn OFF cycle fans")
 
     def cyrcfanstatus(self):
-        for cyrcfan in self.getCyrcFans()
+        for cyrcfan in self.getCyrcFans():
             cyrcfan.status()
             logger.info(f" Status wentyaltorów cyrk {cyrcfan.status()}....")
 
@@ -548,7 +548,7 @@ def main():
             continue
 
         logger.info(f"Process is running")
-        cyclefanStatus = process.getFurnance().
+        cyrcfanStatus = process.getFurnance().cyrcfanstatus()
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
