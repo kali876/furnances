@@ -241,9 +241,9 @@ class Furnance:
             self.__exhaustfans = []
         self.__exhaustfans = exfans
     def __addExhaustFans(self, exfan):
-        if self.__fans == None:
-            self.__fans = []
-        self.__fans.append(exfan)
+        if self.__exhaustfans == None:
+            self.__exhaustfans = []
+        self.__exhaustfans.append(exfan)
 
     def getTemperature(self):
 
