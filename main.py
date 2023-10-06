@@ -550,7 +550,7 @@ def main():
         logger.info(f"Process is running")
 
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        if cyrcfanStatus < 1:
+        if cyrcfanStatus[0] < 1 or cyrcfanStatus[1] < 1:
             process.getFurnance().cyrcfanon()
 
         currentTemperature = process.getFurnance().getTemperature()
