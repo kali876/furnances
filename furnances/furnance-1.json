@@ -1,5 +1,15 @@
 {
     "furnance_id" : 1,
     "thermometers_ids" : [87, 88, 89, 90],
-    "heaters_ids" : [75]
+    "heaters_ids" : [75],
+    "step_ids" : [21],
+    "step_time_left_ids" : [22],
+    "baking_time_lerf_ids" : [23],
+    "cyrc_fans_left_ids" : [66, 67],
+    "exhaust_fan_ids" : [68],
+    "cabinet_fan_ids" : [69],
+    "open_exhaust_ids" : [70],
+    "close_exhaust_ids" : [71],
+    "open_freshair_ids" : [72],
+    "close_freshair_ids" : [73]
 }
