@@ -249,7 +249,7 @@ class Furnance:
 
         return temperature
 
-    def on(self, power):
+    def heateron(self, power):
         heater = self.getHeaters()
         if power == 5:
             heater[0].on()
@@ -267,11 +267,19 @@ class Furnance:
             heater[4].on()
             logger.info(f"Turn ON heaters 40")
 
-    def off(self):
+    def heateroff(self):
         for heater in self.getHeaters():
             heater.off()
         logger.info(f"Turn OFF heaters")
 
+    def heateron(self):
+        for cyclefan in self.getCyrcFans():
+            cyclefan.on()
+        logger.info(f"Turn ON cycle fan")
+    def cyclefanoff(self):
+        for cyclefan in self.getCyrcFans():
+            cyclefan.off()
+        logger.info(f"Turn OFF cycle fans")
 
     def __load(self):
 
