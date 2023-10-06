@@ -203,11 +203,23 @@ class Furnance:
 
         return temperature
 
-    def on(self):
-        for heater in self.getHeaters():
-            heater.on()
-        logger.info(f"Turn ON heaters")
-
+    def on(self, power):
+        heater = self.getHeaters()
+        if power == 5:
+            heater[0].on()
+            logger.info(f"Turn ON heaters 5")
+        elif power == 15:
+            heater[1].on()
+            logger.info(f"Turn ON heaters 15")
+        elif power == 20:
+            heater[2].on()
+            logger.info(f"Turn ON heaters 20")
+        elif power == 30:
+            heater[3].on()
+            logger.info(f"Turn ON heaters 30")
+        elif power == 40:
+            heater[4].on()
+            logger.info(f"Turn ON heaters 40")
 
     def off(self):
         for heater in self.getHeaters():
@@ -257,21 +269,25 @@ class BakingStep:
 
     def getStepNumber(self):
         return self.__stepNumber
+
     def __setStepNumber(self, number):
         self.__stepNumber = int(number)
 
     def getStartTemperature(self):
         return self.__startTemperature
+
     def __setStartTemperature(self, temperature):
         self.__startTemperature = int(temperature)
     
     def getEndTemperature(self):
         return self.__endTemperature
+
     def __setEndTemperature(self, temperature):
         self.__endTemperature = int(temperature)
 
     def getDuration(self):
         return self.__duration
+
     def __setDuration(self, timestamp):
         self.__duration = int(timestamp)
 
@@ -300,25 +316,43 @@ class BakingProcess:
 
     def getBakingSteps(self):
         return self.__bakingSteps
+
     def __setBakingSteps(self, steps):
         self.__bakingSteps = steps
+
     def __addBakingStep(self, step):
         if self.__bakingSteps == None:
             self.__bakingSteps = []
         self.__bakingSteps.append(step)
 
+    def getCurrentTrend(self):
+        currentStep = self.getCurrentStep()
+        temperatureDifference = currentStep.getEndTemperature() - currentStep.getStartTemperature()
+        if temperatureDifference >0:
+            CurrentTrend = 1 # Grzanie
+        elif temperatureDifference == 0:
+            CurrentTrend = 0 # Utrzymanie
+        elif temperatureDifference < 0:
+            CurrentTrend = 2   #Chłodzenie
+        # elif currentStep == len(self.getBakingSteps()):
+        #      CurrentTrend = 3  # Ostatni etap chłodzenia
+        return CurrentTrend
+
     def getFurnance(self):
         return self.__furnance
+
     def __setFurnance(self, furnance):
         self.__furnance = furnance
 
     def getStartTime(self):
         return self.__startTime
+
     def __setStartTime(self, time):
         self.__startTime = time
 
     def getProcessFileName(self):
         return self.__processFileName
+
     def __setProcessFileName(self, filename):
         self.__processFileName = filename
 
@@ -336,7 +370,6 @@ class BakingProcess:
         self.__setStartTime(data["start_time"])
 
     def getCurrentStep(self):
-
         currentTime = getCurrentTimestamp()
         time = self.getStartTime()
 
@@ -401,8 +434,6 @@ class BakingProcess:
         logger.info(f"Deleting file ./bakings/{self.getProcessFileName()}")
         os.remove(f"./bakings/{self.getProcessFileName()}")
 
-
-
     def toJSON(self):
 
         json = {
@@ -443,17 +474,51 @@ def main():
         logger.info(f"Process is running")
 
         currentTemperature = process.getFurnance().getTemperature()
+        currentTrend = process.getCurrentTrend()
+        stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
 
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
         desiredTemperature = process.getDesiredTemperature()
 
         logger.info(f"Desired temperature : {desiredTemperature}")
+        differenceTemperature = currentTemperature - desiredTemperature
 
-        if currentTemperature < desiredTemperature:
-            process.getFurnance().on()
-        elif currentTemperature >= desiredTemperature:
+
+        if stepsLeft < 1 or differenceTemperature > 1:
             process.getFurnance().off()
+            break
+        elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1:
+            process.getFurnance().on(5)
+        elif differenceTemperature < -0.2 and differenceTemperature > -0.8 and currentTrend == 1:
+            process.getFurnance().on(15)
+        elif differenceTemperature < -0.8 and differenceTemperature > -3 and currentTrend == 1:
+            process.getFurnance().on(20)
+        elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 1:
+            process.getFurnance().on(30)
+        elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 1:
+            process.getFurnance().on(40)
+        if differenceTemperature != 0 and differenceTemperature > -0.3 and currentTrend == 0:
+            process.getFurnance().on(5)
+        elif differenceTemperature < -0.3 and differenceTemperature > -1.5 and currentTrend == 0:
+            process.getFurnance().on(15)
+        elif differenceTemperature < -1.5 and differenceTemperature > -3 and currentTrend == 0:
+            process.getFurnance().on(20)
+        elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 0:
+            process.getFurnance().on(30)
+        elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 0:
+            process.getFurnance().on(40)
+        if differenceTemperature != 0 and differenceTemperature > -0.3 and currentTrend == 2:
+            process.getFurnance().on(5)
+        elif differenceTemperature < -0.3 and differenceTemperature > -1.5 and currentTrend == 2:
+            process.getFurnance().on(15)
+        elif differenceTemperature < -1.5 and differenceTemperature > -3 and currentTrend == 2:
+            process.getFurnance().on(20)
+        elif differenceTemperature < -3 and differenceTemperature > -5 and currentTrend == 2:
+            process.getFurnance().on(30)
+        elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 2:
+            process.getFurnance().on(40)
+
 
         currentDate = datetime.fromtimestamp(getCurrentTimestamp())
 
