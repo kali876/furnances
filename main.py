@@ -548,7 +548,11 @@ def main():
             continue
 
         logger.info(f"Process is running")
+
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
+        if cyrcfanStatus < 1:
+            process.getFurnance().cyrcfanon()
+
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
