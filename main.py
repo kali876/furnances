@@ -132,6 +132,15 @@ class CyrcFan:
             timeout=10,
         )
 
+    def status(self):
+        response = requests.get(
+            f"http://{SERVER_URL}:8060/api/json/device/{str(self.getId())}/state",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        return float(json.loads(response.text)["Results"]["state"])
+
     def toJSON(self):
 
         json = {
@@ -272,14 +281,19 @@ class Furnance:
             heater.off()
         logger.info(f"Turn OFF heaters")
 
-    def heateron(self):
-        for cyclefan in self.getCyrcFans():
-            cyclefan.on()
+    def cyrcfanon(self):
+        for cyrcefan in self.getCyrcFans():
+            cyrcefan.on()
         logger.info(f"Turn ON cycle fan")
-    def cyclefanoff(self):
-        for cyclefan in self.getCyrcFans():
-            cyclefan.off()
+    def cyrcfanoff(self):
+        for cyrcefan in self.getCyrcFans():
+            cyrcefan.off()
         logger.info(f"Turn OFF cycle fans")
+
+    def cyrcfanstatus(self):
+        for cyrcfan in self.getCyrcFans()
+            cyrcfan.status()
+            logger.info(f" Status wentyaltorów cyrk {cyrcfan.status()}....")
 
     def __load(self):
 
@@ -528,13 +542,13 @@ def main():
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
             process.getFurnance().heateroff()
-            process.getFurnance().cyclefanoff()
+            process.getFurnance().cyrcfanoff()
             process.createFinalRaport()
             process.deleteProcessFile()
             continue
 
         logger.info(f"Process is running")
-
+        cyclefanStatus = process.getFurnance().
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
