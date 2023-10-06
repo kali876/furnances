@@ -102,7 +102,7 @@ class Heater:
 
         return json
 
-class Fan:
+class CyrcFan:
 
     __id = None
 
@@ -145,7 +145,7 @@ class Furnance:
     __id = None
     __thermometers = None
     __heaters = None
-    __fans = None
+    __cyrcfans = None
 
     def __init__(self, id):
         self.__setId(id)
@@ -178,13 +178,13 @@ class Furnance:
             self.__heaters = []
         self.__heaters.append(heater)
 
-    def getFans(self):
+    def getCyrcFans(self):
         return self.__fans
-    def __setFans(self, fans):
+    def __setCyrcyFans(self, fans):
         if self.__fans == None:
             self.__fans = []
         self.__fans = fans
-    def __addFans(self, fan):
+    def __addCyrcFans(self, fan):
         if self.__fans == None:
             self.__fans = []
         self.__fans.append(fan)
@@ -237,6 +237,8 @@ class Furnance:
             self.__addThermometer(Thermometer(thermometerId))
         for heatersId in data["heaters_ids"]:
             self.__addHeater(Heater(heatersId))
+        for cyrcfanId in data["cyrc_fans_ids"]:
+            self.__addCyrcFans(CyrcFan(cyrcfanId))
 
     def toJSON(self):
 
@@ -244,6 +246,7 @@ class Furnance:
             "furnance_id" : self.getId(),
             "thermometers" : [thermometer.toJSON() for thermometer in self.getThermometers()],
             "heaters" : [heater.toJSON() for heater in self.getHeaters()],
+            "cyrcfan" : [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
         }
 
         return json
@@ -343,6 +346,7 @@ class BakingProcess:
 
     def __setFurnance(self, furnance):
         self.__furnance = furnance
+
 
     def getStartTime(self):
         return self.__startTime
