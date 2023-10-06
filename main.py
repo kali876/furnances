@@ -140,6 +140,41 @@ class CyrcFan:
 
         return json
 
+class ExhaustFan:
+    __id = None
+
+    def __init__(self, id):
+        self.__setId(id)
+
+    def getId(self):
+        return self.__id
+
+    def __setId(self, id):
+        self.__id = id
+
+    def on(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/1",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def off(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def toJSON(self):
+        json = {
+            "id": self.getId()
+        }
+
+        return json
+
 class Furnance:
 
     __id = None
