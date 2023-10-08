@@ -8,8 +8,24 @@
     "cyrc_fans_ids" : [66, 67],
     "exhaust_fans_ids" : [68],
     "cabinet_fans_ids" : [69],
-    "open_exhaust_ids" : [70],
-    "close_exhaust_ids" : [71],
-    "open_freshair_ids" : [72],
-    "close_freshair_ids" : [73]
+    "valves" : [
+        {
+            "valve_id": 1,
+            "valve_name": "exhaust",
+            "open_valve": 30,
+            "close_valve": 31,
+            "open_status": 34,
+            "close_status": 35
+        }
+        ],
+    "freshair_valves" : [
+        {
+            "valve_id": 2,
+            "valve_name": "freshair",
+            "open_valve": 32,
+            "close_valve": 33,
+            "open_status": 36,
+            "close_status": 37
+        }
+        ]
 }

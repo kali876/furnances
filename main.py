@@ -184,6 +184,119 @@ class ExhaustFan:
 
         return json
 
+class Valve:
+    __id = None
+    __name = None
+    __id_on = None
+    __id_off = None
+    __id_stat_on = None
+    __id_stat_off = None
+    def __init__(self, *args):
+        if len(args) == 1:
+            self.__setId(args[0]["valve_id"])
+            self.__setName(args[0]["valve_name"])
+            self.__setTurnOnFlag(args[0]["open_valve"])
+            self.__setTurnOffFlag(args[0]["close_valve"])
+            self.__setOnFlag(args[0]["open_status"])
+            self.__setOffFlag(args[0]["close_status"])
+        else:
+            self.__setId(args[0])
+            self.__setName(args[1])
+            self.__setTurnOnFlag(args[0])
+            self.__setTurnOffFlag(args[1])
+            self.__setOnFlag(args[2])
+            self.__setOffFlag(args[3])
+
+    def getId(self):
+        return self.__id
+
+    def __setId(self, id):
+        self.__id = id
+
+    def getName(self):
+        return self.__name
+
+    def __setName(self, name):
+        self.__name = name
+
+    def getTurnOnFlag(self):
+        return self.__id_on
+
+    def __setTurnOnFlag(self, id_on):
+        self.__id_on = id_on
+
+    def getTurnOffFlag(self):
+        return self.__id_off
+
+    def __setTurnOffFlag(self, id_off):
+        self.__id_off = id_off
+
+    def getOnFlag(self):
+       return self.__id_stat_on
+
+    def __setOnFlag(self, id_stat_on):
+        self.__id_stat_on = id_stat_on
+
+    def getOffFlag(self):
+        return self.__id_stat_off
+
+    def __setOffFlag(self, id_stat_off):
+        self.__id_stat_off = id_stat_off
+
+    def on(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getTurnOnFlag())}/setValue/255",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def off(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getTurnOffFlag())}/setValue/0",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def status(self):
+        on_status_request = requests.get(
+            f"http://{SERVER_URL}:8060/api/json/device/{str(self.getOnFlag())}/state",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+        off_status_request = requests.get(
+            f"http://{SERVER_URL}:8060/api/json/device/{str(self.getOffFlag())}/state",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        on_status = int(json.loads(on_status_request.text)["Results"]["state"])
+        off_status = int(json.loads(off_status_request.text)["Results"]["state"])
+
+        if on_status !=0 and off_status == 0:
+            status = 1 # Klapa otwarta
+        elif on_status ==0 and off_status != 0:
+            status = 0 # Klapa zamknięta
+        elif on_status ==0 and off_status == 0:
+            status = 2 # Klapa pomiędzy
+
+        return status
+
+    def toJSON(self):
+        json = {
+            "id": self.getId(),
+            "valve_name": self.getName(),
+            "open_valve": self.getTurnOnFlag(),
+            "close_valve": self.getTurnOffFlag(),
+            "open_status": self.getOnFlag(),
+            "close_status": self.getOffFlag()
+        }
+
+        return json
+
 class Furnance:
 
     __id = None
@@ -191,6 +304,8 @@ class Furnance:
     __heaters = None
     __cyrcfans = None
     __exhaustfans = None
+    __valves = None
+
 
     def __init__(self, id):
         self.__setId(id)
@@ -245,6 +360,17 @@ class Furnance:
             self.__exhaustfans = []
         self.__exhaustfans.append(exfan)
 
+    def getValves(self):
+        return self.__valve
+    def __setValves(self, valves):
+        if self.__valve == None:
+            self.__valve = []
+        self.__valve = valves
+    def __addValve(self, valve):
+        if self.__valve == None:
+            self.__valve = []
+        self.__valve.append(valve)
+
     def getTemperature(self):
 
         temperature = 0
@@ -294,7 +420,23 @@ class Furnance:
         fan = 0
         for cyrcfan in self.getCyrcFans():
             fan = fan + cyrcfan.status()
-            logger.info(f" Status wentyaltorów cyrk {fan}....")
+            logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
+
+    def exhaustfanon(self):
+        for exhaustfan in self.getExhaustFans():
+            exhaustfan.on()
+        logger.info(f"Turn ON exhaust fan")
+
+    def exhaustfanoff(self):
+        for exhaustfan in self.getExhaustFans():
+            exhaustfan.off()
+        logger.info(f"Turn OFF exhaust fan")
+
+    def cyrcfanstatus(self):
+        fan = 0
+        for exhausfan in self.getExhaustFans():
+            fan = fan + exhausfan.status()
+            logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
 
     def __load(self):
 
@@ -310,6 +452,9 @@ class Furnance:
             self.__addCyrcFans(CyrcFan(cyrcfanId))
         for exhaustfanId in data["exhaust_fans_ids"]:
             self.__addExhaustFans(ExhaustFan(exhaustfanId))
+        for valve in data ["valves"]:
+            self.__addValve(Valve(valve))
+
 
     def toJSON(self):
 
@@ -318,7 +463,8 @@ class Furnance:
             "thermometers" : [thermometer.toJSON() for thermometer in self.getThermometers()],
             "heaters" : [heater.toJSON() for heater in self.getHeaters()],
             "cyrcfan" : [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
-
+            "exhausfan" : [exhaustfan.toJSON() for exhaustfan in self.getExhaustFans()],
+            "valves" : [valve.toJSON() for valve in self.getValves()]
         }
 
         return json
@@ -389,6 +535,8 @@ class BakingProcess:
         self.__setProcessFileName(fileName)
         self.__load(file)
 
+
+
     def getBakingSteps(self):
         return self.__bakingSteps
 
@@ -444,6 +592,9 @@ class BakingProcess:
         self.__setFurnance(Furnance(data["furnance_id"]))
         
         self.__setStartTime(data["start_time"])
+
+        self.getFurnance().cyrcfanon()
+
 
     def getCurrentStep(self):
         currentTime = getCurrentTimestamp()
