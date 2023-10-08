@@ -177,6 +177,15 @@ class ExhaustFan:
             timeout=10,
         )
 
+    def status(self):
+        response = requests.get(
+            f"http://{SERVER_URL}:8060/api/json/device/{str(self.getId())}/state",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        return bool(json.loads(response.text)["Results"]["state"])
+
     def toJSON(self):
         json = {
             "id": self.getId()
