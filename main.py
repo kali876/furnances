@@ -719,6 +719,8 @@ def main():
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
 
+        logger.info(f"Steps Left : {stepsLeft}")
+
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
         desiredTemperature = process.getDesiredTemperature()
