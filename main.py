@@ -718,6 +718,8 @@ def main():
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
+        if stepsLeft < 1 :
+            process.getFurnance().exhaustfanon()
 
         logger.info(f"Steps Left : {stepsLeft}")
 
@@ -731,7 +733,6 @@ def main():
 
         if stepsLeft < 1 or differenceTemperature > 1:
             process.getFurnance().heateroff()
-            process.getFurnance().exhaustfanon()
             break
         elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1:
             process.getFurnance().heateron(5)
