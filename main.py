@@ -361,15 +361,15 @@ class Furnance:
         self.__exhaustfans.append(exfan)
 
     def getValves(self):
-        return self.__valve
+        return self.__valves
     def __setValves(self, valves):
-        if self.__valve == None:
-            self.__valve = []
-        self.__valve = valves
+        if self.__valves == None:
+            self.__valves = []
+        self.__valves = valves
     def __addValve(self, valve):
-        if self.__valve == None:
-            self.__valve = []
-        self.__valve.append(valve)
+        if self.__valves == None:
+            self.__valves = []
+        self.__valves.append(valve)
 
     def getTemperature(self):
 
