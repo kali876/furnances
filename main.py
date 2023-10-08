@@ -704,6 +704,7 @@ def main():
             logger.info(f"Process is finished!")
             process.getFurnance().heateroff()
             process.getFurnance().cyrcfanoff()
+            process.getFurnance().exhaustfanoff()
             process.createFinalRaport()
             process.deleteProcessFile()
             continue
@@ -728,6 +729,7 @@ def main():
 
         if stepsLeft < 1 or differenceTemperature > 1:
             process.getFurnance().heateroff()
+            process.getFurnance().exhaustfanon()
             break
         elif differenceTemperature <= 1 and differenceTemperature > -0.2 and currentTrend == 1:
             process.getFurnance().heateron(5)
