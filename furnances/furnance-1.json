@@ -16,9 +16,7 @@
             "close_valve": 31,
             "open_status": 34,
             "close_status": 35
-        }
-        ],
-    "freshair_valves" : [
+        },
         {
             "valve_id": 2,
             "valve_name": "freshair",
