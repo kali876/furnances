@@ -602,7 +602,7 @@ class BakingProcess:
         
         self.__setStartTime(data["start_time"])
 
-        self.getFurnance().cyrcfanon()
+        # self.getFurnance().cyrcfanon()
 
 
     def getCurrentStep(self):
