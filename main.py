@@ -836,7 +836,7 @@ class BakingProcess:
         # currentStep = self.getCurrentStep()
         processStartTime = self.getStartTime()
 
-        for seq in len(self.getBakingSteps()):
+        for seq in range(1, len(self.getBakingSteps())):
             step = self.getStepByNumber(seq)
             processStartTime = processStartTime + step.getDuration()
 
