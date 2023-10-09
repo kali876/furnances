@@ -774,18 +774,18 @@ def main():
         logger.info(f"Process is running")
 
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        # if cyrcfanStatus < 1:
+        # if cyrcfanStatus == False:
         #     process.getFurnance().cyrcfanon()
 
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
         if stepsLeft < 1 :
-            process.getFurnance().exhaustfanon()
+            if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
             if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
             if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
-            process.getFurnance().exhaustfanoff()
+            if process.getFurnance().exhaustfanstatus() == True : process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
 
