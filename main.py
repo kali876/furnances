@@ -417,6 +417,24 @@ class Furnance:
         return self.__id
     def __setId(self, id):
         self.__id = id
+
+    def on(self):
+
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/255",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def off(self):
+
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
     
     def getThermometers(self):
         return self.__thermometers
@@ -762,6 +780,8 @@ class BakingProcess:
         
         self.__setStartTime(data["start_time"])
 
+        self.getFurnance().on()
+
         # self.getFurnance().cyrcfanon()
 
 
@@ -883,6 +903,7 @@ def main():
             process.getFurnance().heateroff()
             process.getFurnance().cyrcfanoff()
             process.getFurnance().exhaustfanoff()
+            process.getFurnance().off()
             process.updatestatus(False)
             process.createFinalRaport()
             process.deleteProcessFile()
