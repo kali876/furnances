@@ -760,7 +760,7 @@ def main():
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
-        logger.info(f"Steps Left : {stepsLeft}")
+        # logger.info(f"Steps Left : {stepsLeft}")
         logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         if process.isFinished() == True:
