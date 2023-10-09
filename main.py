@@ -383,8 +383,8 @@ class Furnance:
             self.__valves = []
         self.__valves.append(valve)
     def getValveByName(self, name):
-        for valve in self.getValves():
-            if valve.getName() == name:
+        for valves in self.getValves():
+            if valves.getName() == name:
                 return valve
 
     def exhaustValveOpen(self):
@@ -401,6 +401,8 @@ class Furnance:
     def freshairValveClose(self):
         freshairvalve = self.getValveByName("freshair")
         freshairvalve.off()
+        logger.info(f"Świerze powietrze otwarte {self.getValveByName("freshair")}...")
+
 
     def getTemperature(self):
 
@@ -722,6 +724,7 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
+        logger.info(f"Zawory {process.getFurnance().getValves()}...")
         process.getFurnance().freshairValveClose()
 
         if process.isFinished() == True:
