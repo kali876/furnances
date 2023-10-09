@@ -754,7 +754,6 @@ class BakingProcess:
     def __setFurnance(self, furnance):
         self.__furnance = furnance
 
-
     def getStartTime(self):
         return self.__startTime
 
@@ -783,7 +782,6 @@ class BakingProcess:
         self.getFurnance().on()
 
         # self.getFurnance().cyrcfanon()
-
 
     def getCurrentStep(self):
         currentTime = getCurrentTimestamp()
@@ -821,6 +819,15 @@ class BakingProcess:
         desiredTemperature = round(desiredTemperature, 2)
 
         return desiredTemperature
+    def getStepTimeLeft(self):
+        currentStepStartTime = self.getStartTime()
+
+        for seq in range(1, currentStep.getStepNumber()):
+            step = self.getStepByNumber(seq)
+            currentStepStartTime = currentStepStartTime + step.getDuration()
+
+        currentTimeLeft = getCurrentTimestamp() - currentStepStartTime
+        return currentTimeLeft
 
     def updatestatus(self, inprogress):
         if inprogress == True:
@@ -828,12 +835,13 @@ class BakingProcess:
             self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
             self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
             self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
+            self.getFurnance().getMessages().showsteptimeleft(self.getStepTimeLeft())
         else:
             self.getFurnance().getMessages().showsteps("----")
             self.getFurnance().getMessages().showcurrentstep("----")
             self.getFurnance().getMessages().showcurrenttemp("----")
             self.getFurnance().getMessages().showdesiretemp("----")
-
+            self.getFurnance().getMessages().showsteptimeleft("----")
 
     def isFinished(self):
 
