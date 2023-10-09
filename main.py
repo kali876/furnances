@@ -846,7 +846,7 @@ class BakingProcess:
     def toJSON(self):
 
         json = {
-            "furnance_id" : 1,
+            "furnance_id" : 101,
             "steps" : [step.toJSON() for step in self.getBakingSteps()],
             "start_time" : self.getStartTime()
         }
@@ -959,13 +959,13 @@ def main():
         process.addToRaport(raportLine)
 
 main()
-time.sleep(8)
+time.sleep(9)
 main()
-time.sleep(8)
+time.sleep(9)
 main()
-time.sleep(8)
+time.sleep(9)
 main()
-time.sleep(8)
+time.sleep(9)
 main()
-time.sleep(8)
+time.sleep(9)
 main()
