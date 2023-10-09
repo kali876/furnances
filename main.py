@@ -759,7 +759,8 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
-        logger.info(f"Obecny krok {process.getCurrentStep()}...")
+        logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
+        logger.info(f"Steps Left : {stepsLeft}")
         logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         if process.isFinished() == True:
@@ -788,8 +789,6 @@ def main():
             if process.getFurnance().exhaustfanstatus() == True : process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
-
-        logger.info(f"Steps Left : {stepsLeft}")
 
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
