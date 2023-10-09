@@ -385,7 +385,7 @@ class Furnance:
     def getValveByName(self, name):
         for valves in self.getValves():
             if valves.getName() == name:
-                return valve
+                return valves
 
     def exhaustValveOpen(self):
         exhaustvalve = self.getValveByName("exhaust")
