@@ -382,6 +382,10 @@ class Furnance:
         if self.__valves == None:
             self.__valves = []
         self.__valves.append(valve)
+    def getValveByName(self, name):
+        for valve in self.getValves():
+            if valve.getName() == name:
+                return valve
 
     def getTemperature(self):
 
@@ -703,7 +707,7 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
-        logger.info(f"Zawory {process.getFurnance().getValves()} ...")
+        logger.info(f"Zawory {process.getFurnance().getValveByName()} ...")
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
