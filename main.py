@@ -480,6 +480,7 @@ class Furnance:
         for cyrcfan in self.getCyrcFans():
             fan = fan + cyrcfan.status()
             logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
+        return fan
 
     def exhaustfanon(self):
         for exhaustfan in self.getExhaustFans():
@@ -495,6 +496,7 @@ class Furnance:
         for exhaustfan in self.getExhaustFans():
             fan = fan + exhaustfan.status()
             logger.info(f" Status wentyaltorów  weydechowych {fan}....")
+        return fan
 
     def cyrcfanstatus(self):
         fan = 0
@@ -756,6 +758,7 @@ def main():
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
         logger.info(f"Zawór wydechowy status {process.getFurnance().exhaustValveStatus()}...")
+        logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
@@ -785,8 +788,6 @@ def main():
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
 
         logger.info(f"Steps Left : {stepsLeft}")
-
-        logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
