@@ -759,7 +759,7 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
-        logger.info(f"Zawór wydechowy status {process.getFurnance().exhaustValveStatus()}...")
+        logger.info(f"Obecny krok {process.getCurrentStep()}...")
         logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         if process.isFinished() == True:
