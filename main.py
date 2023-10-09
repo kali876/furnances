@@ -32,7 +32,7 @@ logger.addHandler(logHandler)
 
 
 
-class Messages
+class Messages:
     __id = None
     __Steps = None
     __CurrentStep = None
