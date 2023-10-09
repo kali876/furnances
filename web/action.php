@@ -1,7 +1,7 @@
 <?php
 
 $process = new stdClass();
-$process->furnance_id = 1;
+$process->furnance_id = 101;
 $process->start_time = time();
 $process->steps = Array();
 
@@ -24,7 +24,7 @@ for ($i = 1; $i <= 8; $i++) {
 $process = json_encode($process, JSON_PRETTY_PRINT);
  
 
-$fp = fopen("../bakings/furnance-1.json", 'w');
+$fp = fopen("../bakings/furnance-101.json", 'w');
 fwrite($fp, $process);
 fclose($fp);
 
