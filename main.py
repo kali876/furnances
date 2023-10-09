@@ -401,8 +401,9 @@ class Furnance:
 
     def freshairValveClose(self):
         freshairvalve = self.getValveByName("freshair")
+        freshairvalve.getTurnOnFlag()
         freshairvalve.off()
-        logger.info(f"Świerze powietrze zamknięte {freshairvalve}...")
+        logger.info(f"Świerze powietrze zamknięte {freshairvalve.getTurnOnFlag()}...")
 
 
     def getTemperature(self):
