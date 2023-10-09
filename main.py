@@ -819,6 +819,7 @@ class BakingProcess:
         desiredTemperature = round(desiredTemperature, 2)
 
         return desiredTemperature
+
     def getStepTimeLeft(self):
         currentTime = getCurrentTimestamp()
         currentstep = self.getCurrentStep()
@@ -932,8 +933,8 @@ def main():
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
         process.updatestatus(True)
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        # if cyrcfanStatus == False:
-        #     process.getFurnance().cyrcfanon()
+        if cyrcfanStatus == False:
+           process.getFurnance().cyrcfanon()
 
 
         currentTemperature = process.getFurnance().getTemperature()
