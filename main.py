@@ -305,6 +305,9 @@ class Valve:
         }
 
         return json
+    def __str__(self):
+        return self.getName()
+
 
 class Furnance:
 
