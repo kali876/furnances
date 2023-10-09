@@ -86,7 +86,41 @@ class Messages:
             verify=False,
             timeout=10,
         )
-
+    def showcurrentstep(self, step):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentStep())}/setText/{step}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+    def showcurrenttemp(self, temp):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentTemp())}/setText/{temp}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+    def showdesiretemp(self, temp):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getDesireTemp())}/setText/{temp}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+    def showsteptimeleft(self, time):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{time}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+    def showprocesspimeleft(self, time):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessTimeLeft())}/setText/{time}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
 
 class Thermometer:
 
@@ -768,6 +802,13 @@ class BakingProcess:
 
         return desiredTemperature
 
+    def updatestatus(self):
+        self.getFurnance().getMessages().showsteps(len(self.getBakingSteps()))
+        self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
+        self.getFurnance().getMessages().showcurrenttemp(self.getDesiredTemperature())
+        self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
+
+
     def isFinished(self):
 
         currentTime = getCurrentTimestamp()
@@ -846,6 +887,7 @@ def main():
         # if cyrcfanStatus == False:
         #     process.getFurnance().cyrcfanon()
 
+        process.updatestatus()
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
