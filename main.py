@@ -842,6 +842,7 @@ class BakingProcess:
             self.getFurnance().getMessages().showcurrenttemp("----")
             self.getFurnance().getMessages().showdesiretemp("----")
             self.getFurnance().getMessages().showsteptimeleft("----")
+            self.getFurnance().getMessages().showprocesspimeleft("----")
 
     def isFinished(self):
 
