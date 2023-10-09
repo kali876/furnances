@@ -139,7 +139,7 @@ class CyrcFan:
             verify=False,
             timeout=10,
         )
-        return float(json.loads(response.text)["Results"]["state"])
+        return int(json.loads(response.text)["Results"]["state"])
 
     def toJSON(self):
 
@@ -184,7 +184,7 @@ class ExhaustFan:
             verify=False,
             timeout=10,
         )
-        return bool(json.loads(response.text)["Results"]["state"])
+        return int(json.loads(response.text)["Results"]["state"])
 
     def toJSON(self):
         json = {
@@ -500,8 +500,8 @@ class Furnance:
 
     def cyrcfanstatus(self):
         fan = 0
-        for exhausfan in self.getExhaustFans():
-            fan = fan + exhausfan.status()
+        for exhaustfan in self.getExhaustFans():
+            fan = fan + exhaustfan.status()
             #logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
         return fan
     def __load(self):
