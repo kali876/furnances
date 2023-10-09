@@ -825,9 +825,9 @@ class BakingProcess:
 
         for seq in range(1, currentStep.getStepNumber()):
             step = self.getStepByNumber(seq)
-            currentStepStartTime = (currentStepStartTime + step.getDuration())/60
+            currentStepStartTime = currentStepStartTime + step.getDuration()
 
-        currentTimeLeft = getCurrentTimestamp() - currentStepStartTime
+        currentTimeLeft = (getCurrentTimestamp() - currentStepStartTime)/60
         return currentTimeLeft
 
     def updatestatus(self, inprogress):
