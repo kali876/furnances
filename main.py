@@ -821,14 +821,14 @@ class BakingProcess:
         return desiredTemperature
     def getStepTimeLeft(self):
         currentTime = getCurrentTimestamp()
-        currentStep = self.getCurrentStep()
-        currentStepStartTime = self.getStartTime()
+        currentstep = self.getCurrentStep()
+        StepStartTime = self.getStartTime()
 
-        for seq in range(1, currentStep.getStepNumber()):
-            step = self.getStepByNumber(seq)
-            currentStepStartTime = currentStepStartTime + step.getDuration()
+        for x in range(1, currentstep.getStepNumber()):
+            step = self.getStepByNumber(x)
+            StepStartTime = StepStartTime + step.getDuration()
 
-        currentTimeLeft = (currentStepStartTime - currentTime)/60
+        currentTimeLeft = (StepStartTime - currentTime)/60
         currentTimeLeft = round(currentTimeLeft, 0)
         return currentTimeLeft
 
