@@ -892,12 +892,6 @@ def main():
         process = BakingProcess(file)
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
-        if process.isFinished() == False:
-            process.updatestatus(True)
-
-        logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
-
-
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
@@ -911,7 +905,8 @@ def main():
             continue
 
         logger.info(f"Process is running")
-
+        logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
+        process.updatestatus(True)
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
         # if cyrcfanStatus == False:
         #     process.getFurnance().cyrcfanon()
