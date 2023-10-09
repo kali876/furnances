@@ -832,6 +832,19 @@ class BakingProcess:
         currentTimeLeft = (getCurrentTimestamp() - positionInCurrentStep)/60
         currentTimeLeft = round(currentTimeLeft, 0)
         return currentTimeLeft
+    def getProcesTimeLeft(self):
+        # currentStep = self.getCurrentStep()
+        currentStepStartTime = self.getStartTime()
+
+        for seq in self.getBakingSteps():
+            step = self.getStepByNumber(seq)
+            currentStepStartTime = currentStepStartTime + step.getDuration()
+
+        positionInCurrentStep = currentStepStartTime - getCurrentTimestamp()
+
+        currentTimeLeft = (getCurrentTimestamp() - positionInCurrentStep)/60
+        currentTimeLeft = round(currentTimeLeft, 0)
+        return currentTimeLeft
 
     def updatestatus(self, inprogress):
         if inprogress == True:
@@ -840,6 +853,7 @@ class BakingProcess:
             self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
             self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
             self.getFurnance().getMessages().showsteptimeleft(self.getStepTimeLeft())
+            self.getFurnance().getMessages().showprocesspimeleft(self.getProcesTimeLeft())
         else:
             self.getFurnance().getMessages().showsteps("----")
             self.getFurnance().getMessages().showcurrentstep("----")
