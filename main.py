@@ -700,6 +700,8 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
+        logger.info(f"Zawory {process.getFurnance().getValves()} ...")
+
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
             process.getFurnance().heateroff()
