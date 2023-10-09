@@ -72,12 +72,12 @@ class Messages:
         self.__setDesireTemp = temp
     def getStepTimeLeft(self):
         return self.__setStepTimeLeft
-    def __setStepTimeLeft(self, stime):
-        self.__setStepTimeLeft = stime
+    def __setStepTimeLeft(self, st_time):
+        self.__setStepTimeLeft = st_time
     def getProcessTimeLeft(self):
         return self.__setProcessTimeLeft
-    def __setProcessTimeLeft(self, ptime):
-        self.__setProcessTimeLeft = ptime
+    def __setProcessTimeLeft(self, pr_time):
+        self.__setProcessTimeLeft = pr_time
 
     def showsteps(self, steps):
         requests.get(
