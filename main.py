@@ -387,6 +387,21 @@ class Furnance:
             if valve.getName() == name:
                 return valve
 
+    def exhaustValveOpen(self):
+        exhaustvalve = self.getValveByName("exhaust")
+        exhaustvalve.on()
+
+    def exhaustValveClose(self):
+        exhaustvalve = self.getValveByName("exhaust")
+        exhaustvalve.off()
+
+    def freshairValveOpen(self):
+        freshairvalve = self.getValveByName("freshair")
+        freshairvalve.on()
+    def freshairValveClose(self):
+        freshairvalve = self.getValveByName("freshair")
+        freshairvalve.off()
+
     def getTemperature(self):
 
         temperature = 0
@@ -707,7 +722,7 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
-        logger.info(f"Zawory {process.getFurnance().getValveByName()} ...")
+        process.getFurnance().freshairValveClose()
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
