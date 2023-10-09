@@ -411,12 +411,12 @@ class Furnance:
     def freshairValveOpen(self):
         freshairvalve = self.getValveByName("freshair")
         freshairvalve.on()
-        logger.info(f"Świerze powietrze jest zamykane...")
+        logger.info(f"Świerze powietrze jest otwierane...")
 
     def freshairValveClose(self):
         freshairvalve = self.getValveByName("freshair")
         freshairvalve.off()
-        logger.info(f"Świerze powietrze jest otwierane...")
+        logger.info(f"Świerze powietrze jest zamykane...")
 
     def freshairValveStatus(self):
         status = 0
@@ -490,6 +490,11 @@ class Furnance:
         for exhaustfan in self.getExhaustFans():
             exhaustfan.off()
         logger.info(f"Turn OFF exhaust fan")
+    def exhaustfanstatus(self):
+        fan = 0
+        for exhaustfan in self.getExhaustFans():
+            fan = fan + exhaustfan.status()
+            logger.info(f" Status wentyaltorów  weydechowych {fan}....")
 
     def cyrcfanstatus(self):
         fan = 0
@@ -772,14 +777,16 @@ def main():
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
         if stepsLeft < 1 :
             process.getFurnance().exhaustfanon()
-            process.getFurnance().exhaustValveOpen()
-            process.getFurnance().freshairValveOpen()
+            if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
+            if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
             process.getFurnance().exhaustfanoff()
-            process.getFurnance().exhaustValveClose()
-            process.getFurnance().freshairValveClose()
+            if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
+            if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
 
         logger.info(f"Steps Left : {stepsLeft}")
+
+        logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
 
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
