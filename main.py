@@ -262,7 +262,7 @@ class Valve:
 
     def off(self):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getTurnOffFlag())}/setValue/0",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getTurnOffFlag())}/setValue/255",
             headers=headers,
             verify=False,
             timeout=10,
@@ -401,9 +401,8 @@ class Furnance:
 
     def freshairValveClose(self):
         freshairvalve = self.getValveByName("freshair")
-        freshairvalve.getTurnOnFlag()
         freshairvalve.off()
-        logger.info(f"Świerze powietrze zamknięte {freshairvalve.getTurnOnFlag()}...")
+        logger.info(f"Świerze powietrze zamknięte {freshairvalve.getTurnOffFlag()}...")
 
 
     def getTemperature(self):
