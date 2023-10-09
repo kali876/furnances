@@ -830,7 +830,7 @@ class BakingProcess:
 
         currentTimeLeft = (currentStepStartTime - currentTime)/60
         currentTimeLeft = round(currentTimeLeft, 0)
-        return currentStep.getStepNumber()
+        return currentTimeLeft
 
     def getProcesTimeLeft(self):
         currentTime = getCurrentTimestamp()
