@@ -802,11 +802,17 @@ class BakingProcess:
 
         return desiredTemperature
 
-    def updatestatus(self):
-        self.getFurnance().getMessages().showsteps(len(self.getBakingSteps()))
-        self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
-        self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
-        self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
+    def updatestatus(self, inprogress):
+        if inprogress == True:
+            self.getFurnance().getMessages().showsteps(len(self.getBakingSteps()))
+            self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
+            self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
+            self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
+        else:
+            self.getFurnance().getMessages().showsteps("----")
+            self.getFurnance().getMessages().showcurrentstep("----")
+            self.getFurnance().getMessages().showcurrenttemp("----")
+            self.getFurnance().getMessages().showdesiretemp("----")
 
 
     def isFinished(self):
@@ -866,9 +872,9 @@ def main():
         process = BakingProcess(file)
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
+        process.updatestatus(True)
 
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
-        process.getFurnance().getMessages().showsteps(len(process.getBakingSteps()))
 
 
 
@@ -877,6 +883,7 @@ def main():
             process.getFurnance().heateroff()
             process.getFurnance().cyrcfanoff()
             process.getFurnance().exhaustfanoff()
+            process.updatestatus(False)
             process.createFinalRaport()
             process.deleteProcessFile()
             continue
@@ -887,7 +894,7 @@ def main():
         # if cyrcfanStatus == False:
         #     process.getFurnance().cyrcfanon()
 
-        process.updatestatus()
+
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
