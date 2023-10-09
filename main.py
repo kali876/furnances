@@ -288,9 +288,9 @@ class Valve:
         if on_status !=0 and off_status == 0:
             status = 1 # Klapa otwarta
         elif on_status ==0 and off_status != 0:
-            status = 0 # Klapa zamknięta
+            status = 2 # Klapa zamknięta
         elif on_status ==0 and off_status == 0:
-            status = 2 # Klapa pomiędzy
+            status = 3 # Klapa pomiędzy
 
         return status
 
@@ -390,19 +390,44 @@ class Furnance:
     def exhaustValveOpen(self):
         exhaustvalve = self.getValveByName("exhaust")
         exhaustvalve.on()
+        logger.info(f"Zawór wydechowy jest otwierany...")
 
     def exhaustValveClose(self):
         exhaustvalve = self.getValveByName("exhaust")
         exhaustvalve.off()
+        logger.info(f"Zawór wydechowy jest zamykany...")
+
+    def exhaustValveStatus(self):
+        status = 0
+        exhaustvalve = self.getValveByName("exhaust")
+        if exhaustvalve.status() == 1:
+            status = 1
+        elif exhaustvalve.status() == 2:
+            status = 2
+        elif exhaustvalve.status() == 3:
+            status = 3
+        return status
 
     def freshairValveOpen(self):
         freshairvalve = self.getValveByName("freshair")
         freshairvalve.on()
+        logger.info(f"Świerze powietrze jest zamykane...")
 
     def freshairValveClose(self):
         freshairvalve = self.getValveByName("freshair")
         freshairvalve.off()
-        logger.info(f"Świerze powietrze zamknięte {freshairvalve.getTurnOffFlag()}...")
+        logger.info(f"Świerze powietrze jest otwierane...")
+
+    def freshairValveStatus(self):
+        status = 0
+        freshairvalve = self.getValveByName("freshair")
+        if freshairvalve.status() == 1:
+            status = 1
+        elif freshairvalve.status() == 2:
+            status = 2
+        elif freshairvalve.status() == 3:
+            status = 3
+        return status
 
 
     def getTemperature(self):
@@ -725,8 +750,7 @@ def main():
 
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
-        logger.info(f"Zawory {process.getFurnance().getValves()}...")
-        process.getFurnance().freshairValveClose()
+        logger.info(f"Zawór wydechowy status {process.getFurnance().exhaustValveStatus()}...")
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
