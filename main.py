@@ -823,14 +823,14 @@ class BakingProcess:
         currentStep = self.getCurrentStep()
         currentStepStartTime = self.getStartTime()
 
-        for seq in range(1, currentStep.getStepNumber()):
+        for seq in range(0, currentStep.getStepNumber()):
             step = self.getStepByNumber(seq)
             currentStepStartTime = currentStepStartTime + step.getDuration()
 
 
         currentTimeLeft = (currentStepStartTime - getCurrentTimestamp())/60
         currentTimeLeft = round(currentTimeLeft, 0)
-        return currentTimeLeft
+        return currentStep.getStepNumber()
 
     def getProcesTimeLeft(self):
         currentTime = getCurrentTimestamp()
