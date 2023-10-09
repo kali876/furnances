@@ -114,7 +114,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
-    def showprocesspimeleft(self, ptime):
+    def showprocesstimeleft(self, ptime):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessTimeLeft())}/setText/{ptime}",
             headers=headers,
@@ -834,17 +834,17 @@ class BakingProcess:
         return currentTimeLeft
     def getProcesTimeLeft(self):
         # currentStep = self.getCurrentStep()
-        currentStepStartTime = self.getStartTime()
+        processStartTime = self.getStartTime()
 
         for seq in self.getBakingSteps():
             step = self.getStepByNumber(seq)
-            currentStepStartTime = currentStepStartTime + step.getDuration()
+            processStartTime = (processStartTime + step.getDuration())
 
         # positionInCurrentStep = currentStepStartTime - getCurrentTimestamp()
 
-        currentTimeLeft = (currentStepStartTime - getCurrentTimestamp())/60
-        currentTimeLeft = round(currentTimeLeft, 0)
-        return currentTimeLeft
+        processTimeLeft = (processStartTime - getCurrentTimestamp())/60
+        processTimeLeft = round(processTimeLeft, 0)
+        return processTimeLeft
 
     def updatestatus(self, inprogress):
         if inprogress == True:
@@ -853,14 +853,14 @@ class BakingProcess:
             self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
             self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
             self.getFurnance().getMessages().showsteptimeleft(self.getStepTimeLeft())
-            self.getFurnance().getMessages().showprocesspimeleft(self.getProcesTimeLeft())
+            self.getFurnance().getMessages().showprocesstimeleft(self.getProcesTimeLeft())
         else:
             self.getFurnance().getMessages().showsteps("----")
             self.getFurnance().getMessages().showcurrentstep("----")
             self.getFurnance().getMessages().showcurrenttemp("----")
             self.getFurnance().getMessages().showdesiretemp("----")
             self.getFurnance().getMessages().showsteptimeleft("----")
-            self.getFurnance().getMessages().showprocesspimeleft("----")
+            self.getFurnance().getMessages().showprocesstimeleft("----")
 
     def isFinished(self):
 
