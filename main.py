@@ -772,6 +772,12 @@ def main():
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
         if stepsLeft < 1 :
             process.getFurnance().exhaustfanon()
+            process.getFurnance().exhaustValveOpen()
+            process.getFurnance().freshairValveOpen()
+        elif stepsLeft >= 1:
+            process.getFurnance().exhaustfanoff()
+            process.getFurnance().exhaustValveClose()
+            process.getFurnance().freshairValveClose()
 
         logger.info(f"Steps Left : {stepsLeft}")
 
