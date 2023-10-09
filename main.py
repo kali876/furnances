@@ -805,7 +805,7 @@ class BakingProcess:
     def updatestatus(self):
         self.getFurnance().getMessages().showsteps(len(self.getBakingSteps()))
         self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
-        self.getFurnance().getMessages().showcurrenttemp(self.getDesiredTemperature())
+        self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
         self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
 
 
