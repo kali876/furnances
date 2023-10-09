@@ -495,15 +495,15 @@ class Furnance:
         fan = 0
         for exhaustfan in self.getExhaustFans():
             fan = fan + exhaustfan.status()
-            logger.info(f" Status wentyaltorów  weydechowych {fan}....")
+            #logger.info(f" Status wentyaltorów  weydechowych {fan}....")
         return fan
 
     def cyrcfanstatus(self):
         fan = 0
         for exhausfan in self.getExhaustFans():
             fan = fan + exhausfan.status()
-            logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
-
+            #logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
+        return fan
     def __load(self):
 
         file = open(f"furnances/furnance-{self.getId()}.json")
