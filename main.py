@@ -820,6 +820,7 @@ class BakingProcess:
 
         return desiredTemperature
     def getStepTimeLeft(self):
+        currentStep = self.getCurrentStep()
         currentStepStartTime = self.getStartTime()
 
         for seq in range(1, currentStep.getStepNumber()):
