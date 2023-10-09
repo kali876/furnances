@@ -476,9 +476,10 @@ class Furnance:
         logger.info(f"Turn OFF cycle fans")
 
     def cyrcfanstatus(self):
-        fan = 0
+        fan = False
         for cyrcfan in self.getCyrcFans():
-            fan = fan + cyrcfan.status()
+            if cyrcfan.status > 0 and fan == False:
+                fan = True
             logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
         return fan
 
@@ -492,9 +493,10 @@ class Furnance:
             exhaustfan.off()
         logger.info(f"Turn OFF exhaust fan")
     def exhaustfanstatus(self):
-        fan = 0
+        fan = False
         for exhaustfan in self.getExhaustFans():
-            fan = fan + exhaustfan.status()
+            if exhaustfan.status() > 0 and fan == False:
+                fan = True
             #logger.info(f" Status wentyaltorów  weydechowych {fan}....")
         return fan
 
