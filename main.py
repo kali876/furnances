@@ -32,6 +32,61 @@ logger.addHandler(logHandler)
 
 
 
+class Messages
+    __id = None
+    __Steps = None
+    __CurrentStep = None
+    __CurrentTemp = None
+    __DesireTemp = None
+    __StepTimeLeft = None
+    __ProcessTimeLeft = None
+
+    def __init__(self, *args):
+        self.__setId(args[0]["message_id"])
+        self.__setSteps(args[0]["message_steps"])
+        self.__setCurrentStep(args[0]["message_current_step"])
+        self.__setCurrentTemp(args[0]["message_current_temp"])
+        self.__setDesireTemp(args[0]["message_desire_temp"])
+        self.__setStepTimeLeft(args[0]["message_step_time_left"])
+        self.__setProcessTimeLeft(args[0]["message_process_time_left"])
+
+    def getId(self):
+        return self.__id
+    def __setId(self, id):
+        self.__id = id
+    def getSteps(self):
+        return self.__Steps
+    def __setSteps(self, steps):
+        self.__Steps = steps
+    def getCurrentStep(self):
+        return self.__setCurrentStep
+    def __setCurrentStep(self, step):
+        self.__setCurrentStep = step
+    def getCurrentTemp(self):
+        return self.__setCurrentTemp
+    def __setCurrentTemp(self, temp):
+        self.__setCurrentTemp = temp
+    def getDesireTemp(self):
+        return self.__setDesireTemp
+    def __setDesireTemp(self, temp):
+        self.__setDesireTemp = temp
+    def getStepTimeLeft(self):
+        return self.__setStepTimeLeft
+    def __setStepTimeLeft(self, time):
+        self.__setStepTimeLeft = time
+    def getProcessTimeLeft(self):
+        return self.__setProcessTimeLeft
+    def __setProcessTimeLeft(self, time):
+        self.__setProcessTimeLeft = time
+
+    def showsteps(self, steps):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getSteps())}/setText/{steps}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
 
 class Thermometer:
 
@@ -317,6 +372,7 @@ class Furnance:
     __cyrcfans = None
     __exhaustfans = None
     __valves = None
+    __messages = None
 
 
     def __init__(self, id):
@@ -382,6 +438,14 @@ class Furnance:
         if self.__valves == None:
             self.__valves = []
         self.__valves.append(valve)
+
+    def getMessages(self):
+        return self.__messages
+    def __setMessages(self, messages):
+        if self.__valves == None:
+            self.___messages = []
+        self.__messages = messages
+
     def getValveByName(self, name):
         for valves in self.getValves():
             if valves.getName() == name:
@@ -522,6 +586,8 @@ class Furnance:
             self.__addExhaustFans(ExhaustFan(exhaustfanId))
         for valve in data ["valves"]:
             self.__addValve(Valve(valve))
+        for messages in data ["messages"]:
+            self.__setMessages(Messages(messages))
 
 
     def toJSON(self):
@@ -532,7 +598,8 @@ class Furnance:
             "heaters" : [heater.toJSON() for heater in self.getHeaters()],
             "cyrcfan" : [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
             "exhausfan" : [exhaustfan.toJSON() for exhaustfan in self.getExhaustFans()],
-            "valves" : [valve.toJSON() for valve in self.getValves()]
+            "valves" : [valve.toJSON() for valve in self.getValves()],
+            "messages": [messages.toJSON() for messages in self.getMessages()]
         }
 
         return json
@@ -760,8 +827,9 @@ def main():
         logger.info(f"Start updating baking process in furnance {process.getFurnance().getId()}...")
 
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
-        # logger.info(f"Steps Left : {stepsLeft}")
-        logger.info(f"Satus wentylatorów wydechowych: {process.getFurnance().exhaustfanstatus()}")
+        process.getFurnance().getMessages().showsteps(len(process.getBakingSteps()))
+
+
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")

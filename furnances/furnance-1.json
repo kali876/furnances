@@ -25,5 +25,17 @@
             "open_status": 36,
             "close_status": 37
         }
+        ],
+    "messages" : [
+        {
+            "message_id": 1,
+            "message_steps": 21,
+            "message_current_step": 22,
+            "message_current_temp": 23,
+            "message_desire_temp": 24,
+            "message_step_time_left": 25,
+            "message_process_time_left": 26
+        }
         ]
+
 }
