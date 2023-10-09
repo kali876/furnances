@@ -93,30 +93,30 @@ class Messages:
             verify=False,
             timeout=10,
         )
-    def showcurrenttemp(self, temp):
+    def showcurrenttemp(self, ctemp):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentTemp())}/setText/{temp}",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentTemp())}/setText/{ctemp}",
             headers=headers,
             verify=False,
             timeout=10,
         )
-    def showdesiretemp(self, temp):
+    def showdesiretemp(self, dtemp):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getDesireTemp())}/setText/{temp}",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getDesireTemp())}/setText/{dtemp}",
             headers=headers,
             verify=False,
             timeout=10,
         )
-    def showsteptimeleft(self, time):
+    def showsteptimeleft(self, stime):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{time}",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{stime}",
             headers=headers,
             verify=False,
             timeout=10,
         )
-    def showprocesspimeleft(self, time):
+    def showprocesspimeleft(self, ptime):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessTimeLeft())}/setText/{time}",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessTimeLeft())}/setText/{ptime}",
             headers=headers,
             verify=False,
             timeout=10,
