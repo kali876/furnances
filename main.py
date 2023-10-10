@@ -109,8 +109,7 @@ class Mail:
 
         self.__setServers=data["server_id"]
         self.__setServerAddress=data["server_address"]
-        for receipients in data["recipients"]:
-            self.__addReceipient(receipients)
+        self.__setReceipient= data["recipients"]
         self.__setSender=data ["sender"]
         self.__setLogin=data ["login"]
         self.__setPass=["pass"]
