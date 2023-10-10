@@ -50,9 +50,9 @@ class Mail:
     __attachment = None
 
     def __init__(self, subject, message, attachment):
-        self.__message(message)
-        self.__attachment(attachment)
-        self.__subject(subject)
+        self.__message = message
+        self.__attachment = attachment
+        self.__subject = subject
         self.__load()
 
     def getServers(self):
