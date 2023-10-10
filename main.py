@@ -123,7 +123,7 @@ class Mail:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message))
+        msg.attach(MIMEText(message, 'utf-8'))
 
         for path in files:
             part = MIMEBase('application', "octet-stream")
