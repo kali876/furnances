@@ -123,7 +123,7 @@ class Mail:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message, 'utf-8'))
+        msg.attach(MIMEText(message, "plain"))
 
         filename = files
         with open(filename, 'r') as f:
@@ -992,7 +992,7 @@ class BakingProcess:
         file = f"raports/{startDate}.csv"
 
         send_mail = Mail(subject, message, file)
-        send_mail.send_mail()
+        # send_mail.send_mail()
         logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
