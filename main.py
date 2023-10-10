@@ -125,17 +125,14 @@ class Mail:
 
         msg.attach(MIMEText(message, 'utf-8'))
 
-        for path in files:
-            part = MIMEBase('application', "octet-stream")
-            with open(path, 'rb') as file:
-                part.set_payload(file.read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition',
-                            'attachment; filename={}'.format(Path(path).name))
-            msg.attach(part)
+        filename = files
+        with open(filename, 'r') as f:
+            part = MIMEApplication(f.read(), Name=basename(filename))
+            part['Content-Disposition'] = 'attachment; filename="{}"'.format(basename(filename))
+        msg.attach(part)
 
         smtp = smtplib.SMTP(server)
-        smtp.sendmail(send_from, send_to, msg.as_string())
+        smtp.send_message(msg,send_from, send_to)
         smtp.close()
 
 
@@ -990,8 +987,8 @@ class BakingProcess:
 
     def createFinalRaport(self):
         startDate = datetime.fromtimestamp(self.getStartTime())
-        message = f"Raport z procesu spiekania z dnia {startDate}"
-        subject = f"Raport z procesu spiekania z dnia {startDate}"
+        message = "Raport z procesu spiekania z dnia " + {startDate}
+        subject = "Raport z procesu spiekania z dnia "+ {startDate}
         file = f"raports/{startDate}.csv"
 
         send_mail = Mail(subject, message, file)
