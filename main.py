@@ -107,13 +107,13 @@ class Mail:
 
         data = json.load(file)
 
-        self.__setServers(data["server_id"])
-        self.__setServerAddress(data["server_address"])
+        self.__setServers=data["server_id"]
+        self.__setServerAddress=data["server_address"]
         for receipients in data["recipients"]:
             self.__addReceipient(receipients)
-        self.__setSender(data ["sender"])
-        self.__setLogin(data ["login"])
-        self.__setPass(["pass"])
+        self.__setSender=data ["sender"]
+        self.__setLogin=data ["login"]
+        self.__setPass=["pass"]
 
     def send_mail(self, send_from=__sender, send_to=__recipients, subject=__subject, message=__message, files=__attachment,
                   server=__server_address, port=587, username=__login, password=__pass,
