@@ -680,6 +680,9 @@ class Furnance:
         elif power == 40:
             heater[4].on()
             logger.info(f"Turn ON heaters 40")
+        elif power == 60:
+            heater[5].on()
+            logger.info(f"Turn ON heaters 60")
 
     def heateroff(self):
         for heater in self.getHeaters():
@@ -1078,8 +1081,10 @@ def main():
             process.getFurnance().heateron(20)
         elif differenceTemperature <= -2 and differenceTemperature > -3.5 and currentTrend == 1:
             process.getFurnance().heateron(30)
-        elif differenceTemperature <= -3.5 and differenceTemperature > -100 and currentTrend == 1:
+        elif differenceTemperature <= -3.5 and differenceTemperature > -5 and currentTrend == 1:
             process.getFurnance().heateron(40)
+        elif differenceTemperature <= -5 and differenceTemperature > -100 and currentTrend == 1:
+            process.getFurnance().heateron(60)
         if differenceTemperature != 0 and differenceTemperature > -0.1 and currentTrend == 0:
             process.getFurnance().heateron(5)
         elif differenceTemperature <= -0.1 and differenceTemperature > -1 and currentTrend == 0:

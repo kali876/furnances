@@ -1,7 +1,7 @@
 {
     "furnance_id" : 101,
     "thermometers_ids" : [87, 88, 89, 90],
-    "heaters_ids" : [41, 42, 43, 44, 45],
+    "heaters_ids" : [41, 42, 43, 44, 45, 46],
     "step_ids" : [21],
     "step_time_left_ids" : [22],
     "baking_time_lerf_ids" : [23],
