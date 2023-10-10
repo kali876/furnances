@@ -25,13 +25,13 @@ def getCurrentTimestamp():
     return int(timestamp)
 
 logFilename = f"bakings-script.log"
-
+encodeFilename = logFilename.encode('utf-8')
 logger = logging.getLogger('furnances')
 
 logFormatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
 logger.setLevel(logging.INFO)
 
-logHandler = logging.handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
+logHandler = logging.handlers.RotatingFileHandler(encodeFilename, maxBytes=100000000, backupCount=2)
 
 logHandler.setFormatter(logFormatter)
 logger.addHandler(logHandler)
