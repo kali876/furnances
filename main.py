@@ -7,6 +7,12 @@ from sys import maxsize
 import requests
 import logging.handlers as handlers
 import time
+import smtplib
+from os.path import basename
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.utils import COMMASPACE, formatdate
 
 os.chdir("/root/furnances")
 
@@ -30,6 +36,108 @@ logHandler = logging.handlers.RotatingFileHandler(logFilename, maxBytes=10000000
 logHandler.setFormatter(logFormatter)
 logger.addHandler(logHandler)
 
+
+class Mail:
+    __id = None
+    __server_id = None
+    __server_address = None
+    __recipients = None
+    __sender = None
+    __subject = None
+    __login = None
+    __pass = None
+    __message = None
+    __attachment = None
+
+    def __init__(self, subject, message, attachment):
+        self.__message(message)
+        self.__attachment(attachment)
+        self.__subject(subject)
+        self.__load()
+
+    def getServers(self):
+        return self.__server_id
+    def __setServers(self, servers):
+        if self.__server_id == None:
+            self.__server_id = []
+        self.__server_id = servers
+
+    def getServerAddress(self):
+        return self.__server_address
+    def __setServerAddress(self, smtp):
+        if self.__server_address == None:
+            self.__server_address = []
+        self.__server_address = smtp
+
+    def getReceipient(self):
+        return self.__recipients
+    def __setReceipient(self, receipient):
+        if self.__recipients == None:
+            self.__recipients = []
+        self.__recipients = receipient
+    def __addReceipient(self, receipient):
+        if self.__recipients == None:
+            self.__recipients = []
+        self.__recipients.append(receipient)
+
+    def getSender(self):
+        return self.__sender
+    def __setServerAddress(self, sender):
+        if self.__sender == None:
+            self.__sender = []
+        self.__sender = sender
+
+    def getLogin(self):
+        return self.__login
+    def __setLogin(self, login):
+        if self.__login == None:
+            self.__login = []
+        self.__login = login
+
+    def getPass(self):
+        return self.__pass
+    def __setPass(self, passwd):
+        if self.__pass == None:
+            self.__pass = []
+        self.__pass = passwd
+
+    def __load(self):
+
+        file = open(f"mail/mailserver.json")
+
+        data = json.load(file)
+
+        self.__setServers(data["server_id"])
+        self.__setServerAddress(data["server_address"])
+        for receipients in data["recipients"]:
+            self.__addReceipient(receipients)
+        self.__setSender(data ["sender"])
+        self.__setLogin(data ["login"])
+        self.__setPass(["pass"])
+
+    def send_mail(self, send_from=__sender, send_to=__recipients, subject=__subject, message=__message, files=__attachment,
+                  server=__server_address, port=587, username=__login, password=__pass,
+                  use_tls=True):
+        msg = MIMEMultipart()
+        msg['From'] = send_from
+        msg['To'] = COMMASPACE.join(send_to)
+        msg['Date'] = formatdate(localtime=True)
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(message))
+        for f in files or []:
+            with open(f, "rb") as fil:
+                part = MIMEApplication(
+                    fil.read(),
+                    Name=basename(f)
+                )
+            # After the file is closed
+            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+            msg.attach(part)
+
+        smtp = smtplib.SMTP(server)
+        smtp.sendmail(send_from, send_to, msg.as_string())
+        smtp.close()
 
 
 class Messages:
@@ -494,7 +602,7 @@ class Furnance:
     def getMessages(self):
         return self.__messages
     def __setMessages(self, messages):
-        if self.__valves == None:
+        if self.___messages == None:
             self.___messages = []
         self.__messages = messages
 
@@ -882,6 +990,13 @@ class BakingProcess:
         file.close()
 
     def createFinalRaport(self):
+        startDate = datetime.fromtimestamp(self.getStartTime())
+        message = f"Raport z procesu spiekania z dnia {startDate}"
+        subject = f"Raport z procesu spiekania z dnia {startDate}"
+        file = f"raports/{startDate}.csv"
+
+        send_mail = Mail(subject, message, file)
+        send_mail.send_mail()
         logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
@@ -926,6 +1041,7 @@ def main():
             process.getFurnance().off()
             process.updatestatus(False)
             process.createFinalRaport()
+
             process.deleteProcessFile()
             continue
 
@@ -933,8 +1049,8 @@ def main():
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
         process.updatestatus(True)
         cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        if cyrcfanStatus == False:
-           process.getFurnance().cyrcfanon()
+        # if cyrcfanStatus == False:
+        #    process.getFurnance().cyrcfanon()
 
 
         currentTemperature = process.getFurnance().getTemperature()
