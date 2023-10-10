@@ -119,7 +119,7 @@ class Mail:
                   use_tls=True):
         msg = MIMEMultipart()
         msg['From'] = send_from
-        msg['To'] = COMMASPACE.join(send_to)
+        msg['To'] = send_to
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
@@ -1040,7 +1040,6 @@ def main():
             process.getFurnance().off()
             process.updatestatus(False)
             process.createFinalRaport()
-
             process.deleteProcessFile()
             continue
 
