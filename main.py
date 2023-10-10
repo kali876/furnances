@@ -122,6 +122,8 @@ class Mail:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
+        msg.attach(MIMEText(message))
+
         for path in files:
             part = MIMEBase('application', "octet-stream")
             with open(path, 'rb') as file:
