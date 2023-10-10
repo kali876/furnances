@@ -25,13 +25,12 @@ def getCurrentTimestamp():
     return int(timestamp)
 
 logFilename = f"bakings-script.log"
-encodeFilename = logFilename.encode('utf-8')
 logger = logging.getLogger('furnances')
 
 logFormatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
 logger.setLevel(logging.INFO)
 
-logHandler = logging.handlers.RotatingFileHandler(encodeFilename, maxBytes=100000000, backupCount=2)
+logHandler = logging.handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
 
 logHandler.setFormatter(logFormatter)
 logger.addHandler(logHandler)
@@ -123,15 +122,13 @@ class Mail:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message))
-        for f in files or []:
-            with open(f, "rb") as fil:
-                part = MIMEApplication(
-                    fil.read(),
-                    Name=basename(f)
-                )
-            # After the file is closed
-            part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
+        for path in files:
+            part = MIMEBase('application', "octet-stream")
+            with open(path, 'rb') as file:
+                part.set_payload(file.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition',
+                            'attachment; filename={}'.format(Path(path).name))
             msg.attach(part)
 
         smtp = smtplib.SMTP(server)
