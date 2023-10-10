@@ -602,8 +602,8 @@ class Furnance:
     def getMessages(self):
         return self.__messages
     def __setMessages(self, messages):
-        if self.___messages == None:
-            self.___messages = []
+        if self.__messages == None:
+            self.__messages = []
         self.__messages = messages
 
     def getValveByName(self, name):
