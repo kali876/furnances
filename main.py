@@ -1085,7 +1085,7 @@ def main():
             process.getFurnance().heateron(40)
         elif differenceTemperature <= -5 and differenceTemperature > -100 and currentTrend == 1:
             process.getFurnance().heateron(60)
-        if differenceTemperature <= 0.5 and differenceTemperature > -0.1 and currentTrend == 0:
+        elif differenceTemperature <= 0.5 and differenceTemperature > -0.1 and currentTrend == 0:
             process.getFurnance().heateron(5)
         elif differenceTemperature <= -0.1 and differenceTemperature > -1 and currentTrend == 0:
             process.getFurnance().heateron(15)
@@ -1105,7 +1105,8 @@ def main():
             process.getFurnance().heateron(30)
         elif differenceTemperature < -5 and differenceTemperature > -100 and currentTrend == 2:
             process.getFurnance().heateron(40)
-
+        else:
+            process.getFurnance().heateroff()
 
         currentDate = datetime.fromtimestamp(getCurrentTimestamp())
 
