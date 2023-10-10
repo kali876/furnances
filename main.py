@@ -885,7 +885,7 @@ class BakingProcess:
 
         self.getFurnance().on()
 
-        # self.getFurnance().cyrcfanon()
+        self.getFurnance().cyrcfanon()
 
     def getCurrentStep(self):
         currentTime = getCurrentTimestamp()
