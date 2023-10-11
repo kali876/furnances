@@ -1059,11 +1059,11 @@ def main():
                 if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
-            elif differenceTemperature >= -5:
+            elif differenceTemperature <= -5:
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
-            elif differenceTemperature > -10:
+            elif differenceTemperature < -10:
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
                 if process.getFurnance().exhaustValveStatus() == 1 : process.getFurnance().exhaustValveClose()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
