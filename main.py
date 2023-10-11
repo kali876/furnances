@@ -1068,7 +1068,8 @@ def main():
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
-            elif differenceTemperature < -10:
+            elif differenceTemperature <-10 and differenceTemperature > -11: # do nothink
+            elif differenceTemperature <= -11:
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
                 if process.getFurnance().exhaustValveStatus() != 2 : process.getFurnance().exhaustValveClose()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
