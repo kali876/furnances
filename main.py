@@ -1055,9 +1055,18 @@ def main():
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
         if stepsLeft < 1 :
-            if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
-            if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
-            if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
+            if differenceTemperature >= 1:
+                if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
+                if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
+                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
+            elif differenceTemperature >= -5:
+                if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
+                if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
+                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
+            elif differenceTemperature > -10:
+                if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
+                if process.getFurnance().exhaustValveStatus() == 1 : process.getFurnance().exhaustValveClose()
+                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
             if process.getFurnance().exhaustfanstatus() == True : process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
