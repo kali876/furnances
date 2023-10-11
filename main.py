@@ -1054,8 +1054,17 @@ def main():
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
+
+
+        logger.info(f"Current temperature in furnance : {currentTemperature}")
+
+        desiredTemperature = process.getDesiredTemperature()
+
+        logger.info(f"Desired temperature : {desiredTemperature}")
+        differenceTemperature = currentTemperature - desiredTemperature
+
         if stepsLeft < 1 :
-            if differenceTemperature >= 1:
+            if differenceTemperature => 1:
                 if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
@@ -1071,14 +1080,6 @@ def main():
             if process.getFurnance().exhaustfanstatus() == True : process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
-
-        logger.info(f"Current temperature in furnance : {currentTemperature}")
-
-        desiredTemperature = process.getDesiredTemperature()
-
-        logger.info(f"Desired temperature : {desiredTemperature}")
-        differenceTemperature = currentTemperature - desiredTemperature
-
 
         if stepsLeft < 1 or differenceTemperature > 1:
             process.getFurnance().heateroff()
