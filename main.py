@@ -1064,7 +1064,8 @@ def main():
         differenceTemperature = currentTemperature - desiredTemperature
 
         if stepsLeft < 1 :
-            if differenceTemperature <= -3 and differenceTemperature >=-10:
+            if differenceTemperature <= 0 and differenceTemperature > -3: print ("DO NOTHIK")
+            elif differenceTemperature <= -3 and differenceTemperature >=-10
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
