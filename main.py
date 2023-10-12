@@ -1024,7 +1024,7 @@ class BakingProcess:
         startDate = datetime.fromtimestamp(self.getStartTime())
         message = f"Raport z procesu spiekania z dnia {startDate}"
         subject = f"Raport z procesu spiekania z dnia {startDate}"
-        file = f"./raports/{startDate}.csv"
+        file = f"raports/{startDate}.csv"
 
         mail = Mail()
         mail.send_mail(subject, message, file)
