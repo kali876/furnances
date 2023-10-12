@@ -998,7 +998,7 @@ class BakingProcess:
 
     def addToRaport(self, line):
 
-        startDate = datetime.fromtimestamp(self.getStartTime())
+        startDate = datetime.fromtimestamp(self.getStartTime()).strftime("%Y%m%d-%H%M%S")
 
         file = open(f"raports/Piec_{self.getFurnance().getId()}_{startDate}.csv", 'a+')
         file.write(f"{line}\n")
@@ -1006,9 +1006,10 @@ class BakingProcess:
 
     def createFinalRaport(self):
         startDate = datetime.fromtimestamp(self.getStartTime())
+        filename = datetime.fromtimestamp(self.getStartTime()).strftime("%Y%m%d-%H%M%S")
         message = f"Raport z procesu spiekania z dnia {startDate}"
         subject = f"Raport z procesu spiekania z dnia {startDate}"
-        file = f"./raports/Piec_{self.getFurnance().getId()}_{startDate}.csv"
+        file = f"./raports/Piec_{self.getFurnance().getId()}_{filename}.csv"
 
         mail = Mail()
         mail.send_mail(subject, message, file)
