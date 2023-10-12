@@ -52,14 +52,6 @@ class Mail:
     def __init__(self):
         self.__load()
 
-    #def getServers(self):
-    #    return self.__server_id
-
-    #def __setServers(self, servers):
-    #    if self.__server_id == None:
-    #        self.__server_id = []
-    #    self.__server_id = servers
-
     def getServerAddress(self):
         return self.__server_address
 
@@ -101,7 +93,6 @@ class Mail:
 
         data = json.load(file)
 
-        #self.__setServers = data["server_id"]
         self.__setServerAddress(data["server_address"])
         self.__setReceipient(data["recipients"])
         self.__setSender(data["sender"])
@@ -112,13 +103,10 @@ class Mail:
         msg = MIMEMultipart()
         msg['From'] = self.getSender()
         msg['To'] = self.getReceipient()
-        #msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        print(f"sub: {subject}, mes: {message}, file: {file} receipient:{self.getReceipient()} sender: {self.getSender()}")
-
         msg.attach(MIMEText(message))
-        filename = f"Raport_{datetime.fromtimestamp(BakingProcess.getStartTime())}"
+        filename = f"Raport_{os.path.basename(file)}"
         attachment = open(file, 'rb')
         attachment_package = MIMEBase('application', 'octet-stream')
         attachment_package.set_payload(attachment.read())
@@ -1020,7 +1008,7 @@ class BakingProcess:
         startDate = datetime.fromtimestamp(self.getStartTime())
         message = f"Raport z procesu spiekania z dnia {startDate}"
         subject = f"Raport z procesu spiekania z dnia {startDate}"
-        file = f"raports/{startDate}.csv"
+        file = f"./raports/{startDate}.csv"
 
         mail = Mail()
         mail.send_mail(subject, message, file)
