@@ -118,26 +118,22 @@ class Mail:
         print(f"sub: {subject}, mes: {message}, file: {file} receipient:{self.getReceipient()} sender: {self.getSender()}")
 
         msg.attach(MIMEText(message))
-
+        filename = f"Raport_{datetime.fromtimestamp(BakingProcess.getStartTime())}"
         attachment = open(file, 'rb')
         attachment_package = MIMEBase('application', 'octet-stream')
         attachment_package.set_payload(attachment.read())
         encoders.encode_base64(attachment_package)
-        attachment_package.add_header('Content-Disposition', "attachment; filename= " + file)
+        attachment_package.add_header('Content-Disposition', "attachment; filename= " + filename)
         msg.attach(attachment_package)
 
         text = msg.as_string()
 
-        #smtp = smtplib.SMTP(self.getServerAddress())
-        #smtp.send_message(msg, self.getSender(), self.getReceipient())
-        #smtp.close()
         context = ssl.create_default_context()
         TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
         TIE_server.ehlo()
         TIE_server.starttls(context=context)
         TIE_server.ehlo()
         TIE_server.login(self.getLogin(), self.getPass())
-
         TIE_server.sendmail(self.getSender(), self.getReceipient(), text)
         TIE_server.quit()
 
