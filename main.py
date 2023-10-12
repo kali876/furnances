@@ -101,7 +101,7 @@ class Mail:
 
         data = json.load(file)
 
-        self.__setServers = data["server_id"]
+        #self.__setServers = data["server_id"]
         self.__setServerAddress = data["server_address"]
         self.__setReceipient = data["recipients"]
         self.__setSender = data["sender"]
