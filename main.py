@@ -1005,7 +1005,7 @@ class BakingProcess:
         file = f"raports/{startDate}.csv"
 
         send_mail = Mail(subject, message, file)
-        # send_mail.send_mail()
+        send_mail.send_mail()
         logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
