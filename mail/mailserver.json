@@ -1,8 +1,8 @@
 {
   "server_id": 1,
-  "server_address": ["poczta.pavernet.pl"],
-  "recipients": ["pawel@pavernet.pl"],
-  "sender": ["produkcja_tarnow@inbras.com.pl"],
-  "login": ["produkcja_tarnow@inbras.com.pl"],
-  "pass": ["wyWa2x82xxT#"]
+  "server_address": "poczta.pavernet.pl",
+  "recipients": "pawel@pavernet.pl",
+  "sender": "produkcja_tarnow@inbras.com.pl",
+  "login": "produkcja_tarnow@inbras.com.pl",
+  "pass": "wyWa2x82xxT#"
 }
