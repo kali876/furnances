@@ -47,8 +47,8 @@ class Mail:
     __message = None
     __attachment = None
 
-    def __init__(self, subject, message, attachment):
-        self.__message = message
+    def __init__(self, subject, attachment):
+        #self.__message = message
         self.__attachment = attachment
         self.__subject = subject
         self.__load()
@@ -121,9 +121,9 @@ class Mail:
         msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        encodeMessage = message.encode('us-ascii')
+        message = f"Raport z procesu spiekania"
 
-        msg.attach(MIMEText(encodeMessage, 'plain'))
+        msg.attach(MIMEText(message, 'plain'))
 
 
         attachment = open(file, 'rb')
@@ -1006,7 +1006,7 @@ class BakingProcess:
         subject = f"Raport z procesu spiekania z dnia {startDate}"
         file = f"raports/{startDate}.csv"
 
-        send_mail = Mail(subject, message, file)
+        send_mail = Mail(subject, file)
         send_mail.send_mail()
         logger.info(f"Creating raport... TODO")
 
