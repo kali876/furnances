@@ -19,9 +19,11 @@ SERVER_URL = "192.168.9.100"
 AUTH_TOKEN = "YWRtaW46d3lXYTJ4ODJ4eFQj"
 headers = {"Authorization": f"Basic {AUTH_TOKEN}"}
 
+
 def getCurrentTimestamp():
     timestamp = datetime.timestamp(datetime.now())
     return int(timestamp)
+
 
 logFilename = f"bakings-script.log"
 logger = logging.getLogger('furnances')
@@ -52,6 +54,7 @@ class Mail:
 
     def getServers(self):
         return self.__server_id
+
     def __setServers(self, servers):
         if self.__server_id == None:
             self.__server_id = []
@@ -59,13 +62,16 @@ class Mail:
 
     def getServerAddress(self):
         return self.__server_address
+
     def __setServerAddress(self, smtp):
         self.__server_address = smtp
 
     def getReceipient(self):
         return self.__recipients
+
     def __setReceipient(self, receipient):
         self.__recipients = receipient
+
     def __addReceipient(self, receipient):
         if self.__recipients == None:
             self.__recipients = []
@@ -73,18 +79,21 @@ class Mail:
 
     def getSender(self):
         return self.__sender
+
     def __setSender(self, sender):
         self.__sender = sender
+
     def getLogin(self):
         return self.__login
+
     def __setLogin(self, login):
         self.__login = login
 
     def getPass(self):
         return self.__pass
+
     def __setPass(self, passwd):
         self.__pass = passwd
-
 
     def __load(self):
 
@@ -92,12 +101,12 @@ class Mail:
 
         data = json.load(file)
 
-        self.__setServers=data["server_id"]
-        self.__setServerAddress=data["server_address"]
-        self.__setReceipient= data["recipients"]
-        self.__setSender=data ["sender"]
-        self.__setLogin=data ["login"]
-        self.__setPass=["pass"]
+        self.__setServers = data["server_id"]
+        self.__setServerAddress = data["server_address"]
+        self.__setReceipient = data["recipients"]
+        self.__setSender = data["sender"]
+        self.__setLogin = data["login"]
+        self.__setPass = ["pass"]
 
     def send_mail(self, subject, message, file):
         msg = MIMEMultipart()
@@ -110,20 +119,18 @@ class Mail:
 
         msg.attach(MIMEText(message, 'plain'))
 
-
         attachment = open(file, 'rb')
 
         attachment_package = MIMEBase('application', 'octet-stream')
-        attachment_package.set_payload((attachment).read())
+        attachment_package.set_payload(attachment.read())
         encoders.encode_base64(attachment_package)
         attachment_package.add_header('Content-Disposition', "attachment; filename= " + file)
         msg.attach(attachment_package)
 
         text = msg.as_string()
 
-
         smtp = smtplib.SMTP(self.getServerAddress())
-        smtp.send_message(msg,self.getSender(), self.getReceipient())
+        smtp.send_message(msg, self.getSender(), self.getReceipient())
         smtp.close()
 
         TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
@@ -132,6 +139,7 @@ class Mail:
 
         TIE_server.sendmail(self.getSender(), self.getReceipient(), text)
         TIE_server.quit()
+
 
 class Messages:
     __id = None
@@ -153,30 +161,43 @@ class Messages:
 
     def getId(self):
         return self.__id
+
     def __setId(self, id):
         self.__id = id
+
     def getSteps(self):
         return self.__Steps
+
     def __setSteps(self, steps):
         self.__Steps = steps
+
     def getCurrentStep(self):
         return self.__setCurrentStep
+
     def __setCurrentStep(self, step):
         self.__setCurrentStep = step
+
     def getCurrentTemp(self):
         return self.__setCurrentTemp
+
     def __setCurrentTemp(self, temp):
         self.__setCurrentTemp = temp
+
     def getDesireTemp(self):
         return self.__setDesireTemp
+
     def __setDesireTemp(self, temp):
         self.__setDesireTemp = temp
+
     def getStepTimeLeft(self):
         return self.__setStepTimeLeft
+
     def __setStepTimeLeft(self, st_time):
         self.__setStepTimeLeft = st_time
+
     def getProcessTimeLeft(self):
         return self.__setProcessTimeLeft
+
     def __setProcessTimeLeft(self, pr_time):
         self.__setProcessTimeLeft = pr_time
 
@@ -187,6 +208,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
+
     def showcurrentstep(self, step):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentStep())}/setText/{step}",
@@ -194,6 +216,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
+
     def showcurrenttemp(self, ctemp):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getCurrentTemp())}/setText/{ctemp}",
@@ -201,6 +224,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
+
     def showdesiretemp(self, dtemp):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getDesireTemp())}/setText/{dtemp}",
@@ -208,6 +232,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
+
     def showsteptimeleft(self, stime):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{stime}",
@@ -215,6 +240,7 @@ class Messages:
             verify=False,
             timeout=10,
         )
+
     def showprocesstimeleft(self, ptime):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessTimeLeft())}/setText/{ptime}",
@@ -223,8 +249,8 @@ class Messages:
             timeout=10,
         )
 
-class Thermometer:
 
+class Thermometer:
     __id = None
 
     def __init__(self, id):
@@ -232,11 +258,11 @@ class Thermometer:
 
     def getId(self):
         return self.__id
+
     def __setId(self, id):
         self.__id = id
-    
-    def getTemperature(self):
 
+    def getTemperature(self):
         response = requests.get(
             f"http://{SERVER_URL}:8060/api/json/device/{str(self.getId())}/state",
             headers=headers,
@@ -247,15 +273,14 @@ class Thermometer:
         return float(json.loads(response.text)["Results"]["state"])
 
     def toJSON(self):
-
         json = {
-            "id" : self.getId()
+            "id": self.getId()
         }
 
         return json
 
-class Heater:
 
+class Heater:
     __id = None
 
     def __init__(self, id):
@@ -263,20 +288,19 @@ class Heater:
 
     def getId(self):
         return self.__id
+
     def __setId(self, id):
         self.__id = id
 
     def on(self):
-
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/255",
             headers=headers,
             verify=False,
             timeout=10,
         )
-        
-    def off(self):
 
+    def off(self):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
             headers=headers,
@@ -285,15 +309,14 @@ class Heater:
         )
 
     def toJSON(self):
-
         json = {
-            "id" : self.getId()
+            "id": self.getId()
         }
 
         return json
 
-class CyrcFan:
 
+class CyrcFan:
     __id = None
 
     def __init__(self, id):
@@ -301,20 +324,19 @@ class CyrcFan:
 
     def getId(self):
         return self.__id
+
     def __setId(self, id):
         self.__id = id
 
     def on(self):
-
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/1",
             headers=headers,
             verify=False,
             timeout=10,
         )
-        
-    def off(self):
 
+    def off(self):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
             headers=headers,
@@ -332,12 +354,12 @@ class CyrcFan:
         return int(json.loads(response.text)["Results"]["state"])
 
     def toJSON(self):
-
         json = {
-            "id" : self.getId()
+            "id": self.getId()
         }
 
         return json
+
 
 class ExhaustFan:
     __id = None
@@ -383,6 +405,7 @@ class ExhaustFan:
 
         return json
 
+
 class Valve:
     __id = None
     __name = None
@@ -390,6 +413,7 @@ class Valve:
     __id_off = None
     __id_stat_on = None
     __id_stat_off = None
+
     def __init__(self, *args):
         if len(args) == 1:
             self.__setId(args[0]["valve_id"])
@@ -431,7 +455,7 @@ class Valve:
         self.__id_off = id_off
 
     def getOnFlag(self):
-       return self.__id_stat_on
+        return self.__id_stat_on
 
     def __setOnFlag(self, id_stat_on):
         self.__id_stat_on = id_stat_on
@@ -475,12 +499,12 @@ class Valve:
         on_status = int(json.loads(on_status_request.text)["Results"]["state"])
         off_status = int(json.loads(off_status_request.text)["Results"]["state"])
 
-        if on_status !=0 and off_status == 0:
-            status = 1 # Klapa otwarta
-        elif on_status ==0 and off_status != 0:
-            status = 2 # Klapa zamknięta
-        elif on_status ==0 and off_status == 0:
-            status = 3 # Klapa pomiędzy
+        if on_status != 0 and off_status == 0:
+            status = 1  # Klapa otwarta
+        elif on_status == 0 and off_status != 0:
+            status = 2  # Klapa zamknięta
+        elif on_status == 0 and off_status == 0:
+            status = 3  # Klapa pomiędzy
 
         return status
 
@@ -495,12 +519,12 @@ class Valve:
         }
 
         return json
+
     def __str__(self):
         return self.getName()
 
 
 class Furnance:
-
     __id = None
     __thermometers = None
     __heaters = None
@@ -509,13 +533,13 @@ class Furnance:
     __valves = None
     __messages = None
 
-
     def __init__(self, id):
         self.__setId(id)
         self.__load()
 
     def getId(self):
         return self.__id
+
     def __setId(self, id):
         self.__id = id
 
@@ -536,13 +560,15 @@ class Furnance:
             verify=False,
             timeout=10,
         )
-    
+
     def getThermometers(self):
         return self.__thermometers
+
     def __setThermometers(self, thermometers):
         if self.__thermometers == None:
             self.__thermometers = []
         self.__thermometers = thermometers
+
     def __addThermometer(self, thermometer):
         if self.__thermometers == None:
             self.__thermometers = []
@@ -550,10 +576,12 @@ class Furnance:
 
     def getHeaters(self):
         return self.__heaters
+
     def __setHeaters(self, heaters):
         if self.__heaters == None:
             self.__heaters = []
         self.__heaters = heaters
+
     def __addHeater(self, heater):
         if self.__heaters == None:
             self.__heaters = []
@@ -561,10 +589,12 @@ class Furnance:
 
     def getCyrcFans(self):
         return self.__cyrcfans
+
     def __setCyrcyFans(self, fans):
         if self.__cyrcfans == None:
             self.__cyrcfans = []
         self.__cyrcfans = fans
+
     def __addCyrcFans(self, fan):
         if self.__cyrcfans == None:
             self.__cyrcfans = []
@@ -572,10 +602,12 @@ class Furnance:
 
     def getExhaustFans(self):
         return self.__exhaustfans
+
     def __setExhaustFans(self, exfans):
         if self.__exhaustfans == None:
             self.__exhaustfans = []
         self.__exhaustfans = exfans
+
     def __addExhaustFans(self, exfan):
         if self.__exhaustfans == None:
             self.__exhaustfans = []
@@ -583,10 +615,12 @@ class Furnance:
 
     def getValves(self):
         return self.__valves
+
     def __setValves(self, valves):
         if self.__valves == None:
             self.__valves = []
         self.__valves = valves
+
     def __addValve(self, valve):
         if self.__valves == None:
             self.__valves = []
@@ -594,6 +628,7 @@ class Furnance:
 
     def getMessages(self):
         return self.__messages
+
     def __setMessages(self, messages):
         if self.__messages == None:
             self.__messages = []
@@ -646,7 +681,6 @@ class Furnance:
             status = 3
         return status
 
-
     def getTemperature(self):
 
         temperature = 0
@@ -690,6 +724,7 @@ class Furnance:
         for cyrcefan in self.getCyrcFans():
             cyrcefan.on()
         logger.info(f"Turn ON cycle fan")
+
     def cyrcfanoff(self):
         for cyrcefan in self.getCyrcFans():
             cyrcefan.off()
@@ -712,20 +747,22 @@ class Furnance:
         for exhaustfan in self.getExhaustFans():
             exhaustfan.off()
         logger.info(f"Turn OFF exhaust fan")
+
     def exhaustfanstatus(self):
         fan = False
         for exhaustfan in self.getExhaustFans():
             if exhaustfan.status() > 0 and fan == False:
                 fan = True
-            #logger.info(f" Status wentyaltorów  weydechowych {fan}....")
+            # logger.info(f" Status wentyaltorów  weydechowych {fan}....")
         return fan
 
     def cyrcfanstatus(self):
         fan = 0
         for exhaustfan in self.getExhaustFans():
             fan = fan + exhaustfan.status()
-            #logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
+            # logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
         return fan
+
     def __load(self):
 
         file = open(f"furnances/furnance-{self.getId()}.json")
@@ -740,28 +777,27 @@ class Furnance:
             self.__addCyrcFans(CyrcFan(cyrcfanId))
         for exhaustfanId in data["exhaust_fans_ids"]:
             self.__addExhaustFans(ExhaustFan(exhaustfanId))
-        for valve in data ["valves"]:
+        for valve in data["valves"]:
             self.__addValve(Valve(valve))
-        for messages in data ["messages"]:
+        for messages in data["messages"]:
             self.__setMessages(Messages(messages))
-
 
     def toJSON(self):
 
         json = {
-            "furnance_id" : self.getId(),
-            "thermometers" : [thermometer.toJSON() for thermometer in self.getThermometers()],
-            "heaters" : [heater.toJSON() for heater in self.getHeaters()],
-            "cyrcfan" : [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
-            "exhausfan" : [exhaustfan.toJSON() for exhaustfan in self.getExhaustFans()],
-            "valves" : [valve.toJSON() for valve in self.getValves()],
+            "furnance_id": self.getId(),
+            "thermometers": [thermometer.toJSON() for thermometer in self.getThermometers()],
+            "heaters": [heater.toJSON() for heater in self.getHeaters()],
+            "cyrcfan": [cyrcfan.toJSON() for cyrcfan in self.getCyrcFans()],
+            "exhausfan": [exhaustfan.toJSON() for exhaustfan in self.getExhaustFans()],
+            "valves": [valve.toJSON() for valve in self.getValves()],
             "messages": [messages.toJSON() for messages in self.getMessages()]
         }
 
         return json
 
-class BakingStep:
 
+class BakingStep:
     __stepNumber = None
     __startTemperature = None
     __endTemperature = None
@@ -790,7 +826,7 @@ class BakingStep:
 
     def __setStartTemperature(self, temperature):
         self.__startTemperature = int(temperature)
-    
+
     def getEndTemperature(self):
         return self.__endTemperature
 
@@ -806,16 +842,16 @@ class BakingStep:
     def toJSON(self):
 
         json = {
-            "step_number" : self.getStepNumber(),
-            "start_temperature" : self.getStartTemperature(),
-            "end_temperature" : self.getEndTemperature(),
-            "duration" : self.getDuration(),
+            "step_number": self.getStepNumber(),
+            "start_temperature": self.getStartTemperature(),
+            "end_temperature": self.getEndTemperature(),
+            "duration": self.getDuration(),
         }
 
         return json
 
-class BakingProcess:
 
+class BakingProcess:
     __bakingSteps = None
     __furnance = None
     __startTime = None
@@ -825,8 +861,6 @@ class BakingProcess:
         file = open(f"bakings/{fileName}")
         self.__setProcessFileName(fileName)
         self.__load(file)
-
-
 
     def getBakingSteps(self):
         return self.__bakingSteps
@@ -842,12 +876,12 @@ class BakingProcess:
     def getCurrentTrend(self):
         currentStep = self.getCurrentStep()
         temperatureDifference = currentStep.getEndTemperature() - currentStep.getStartTemperature()
-        if temperatureDifference >0:
-            CurrentTrend = 1 # Grzanie
+        if temperatureDifference > 0:
+            CurrentTrend = 1  # Grzanie
         elif temperatureDifference == 0:
-            CurrentTrend = 0 # Utrzymanie
+            CurrentTrend = 0  # Utrzymanie
         elif temperatureDifference < 0:
-            CurrentTrend = 2   #Chłodzenie
+            CurrentTrend = 2  # Chłodzenie
         # elif currentStep == len(self.getBakingSteps()):
         #      CurrentTrend = 3  # Ostatni etap chłodzenia
         return CurrentTrend
@@ -880,7 +914,7 @@ class BakingProcess:
         self.getBakingSteps().sort(key=lambda x: x.getStepNumber(), reverse=False)
 
         self.__setFurnance(Furnance(data["furnance_id"]))
-        
+
         self.__setStartTime(data["start_time"])
 
         self.getFurnance().on()
@@ -933,7 +967,7 @@ class BakingProcess:
             step = self.getStepByNumber(x)
             StepStartTime = StepStartTime + step.getDuration()
 
-        currentTimeLeft = (StepStartTime - currentTime)/60
+        currentTimeLeft = (StepStartTime - currentTime) / 60
         currentTimeLeft = round(currentTimeLeft, 0)
         return currentTimeLeft
 
@@ -944,7 +978,7 @@ class BakingProcess:
         for step in self.getBakingSteps():
             time = time + step.getDuration()
 
-        processTimeLeft = (time - currentTime)/60
+        processTimeLeft = (time - currentTime) / 60
         processTimeLeft = round(processTimeLeft, 0)
         return processTimeLeft
 
@@ -1002,9 +1036,9 @@ class BakingProcess:
     def toJSON(self):
 
         json = {
-            "furnance_id" : 101,
-            "steps" : [step.toJSON() for step in self.getBakingSteps()],
-            "start_time" : self.getStartTime()
+            "furnance_id": 101,
+            "steps": [step.toJSON() for step in self.getBakingSteps()],
+            "start_time": self.getStartTime()
         }
 
         return json
@@ -1013,8 +1047,8 @@ class BakingProcess:
         with open(f"bakings/furnance-1.json", "w+") as outfile:
             json.dump(self.toJSON(), outfile, indent=4, sort_keys=True)
 
-def main():
 
+def main():
     logger.info("==================================================")
 
     logger.info('START ITERATION')
@@ -1044,11 +1078,9 @@ def main():
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
         process.updatestatus(True)
 
-
         currentTemperature = process.getFurnance().getTemperature()
         currentTrend = process.getCurrentTrend()
         stepsLeft = len(process.getBakingSteps()) - process.getCurrentStep().getStepNumber()
-
 
         logger.info(f"Current temperature in furnance : {currentTemperature}")
 
@@ -1057,23 +1089,25 @@ def main():
         logger.info(f"Desired temperature : {desiredTemperature}")
         differenceTemperature = currentTemperature - desiredTemperature
 
-        if stepsLeft < 1 :
-            if differenceTemperature <= 0 and differenceTemperature > -3: print ("DO NOTHIK")
+        if stepsLeft < 1:
+            if differenceTemperature <= 0 and differenceTemperature > -3:
+                print("DO NOTHIK")
             elif differenceTemperature <= -3 and differenceTemperature >= -10:
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
-                if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
-                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
-            elif differenceTemperature <-10 and differenceTemperature > -11: print ("DO NOTHIK")
+                if process.getFurnance().exhaustValveStatus() != 1: process.getFurnance().exhaustValveOpen()
+                if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
+            elif differenceTemperature < -10 and differenceTemperature > -11:
+                print("DO NOTHIK")
             elif differenceTemperature <= -11:
                 if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
-                if process.getFurnance().exhaustValveStatus() != 2 : process.getFurnance().exhaustValveClose()
-                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
+                if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
+                if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
             else:
                 # if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
-                if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
-                if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
+                if process.getFurnance().exhaustValveStatus() != 1: process.getFurnance().exhaustValveOpen()
+                if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
-            if process.getFurnance().exhaustfanstatus() == True : process.getFurnance().exhaustfanoff()
+            if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
 
@@ -1121,6 +1155,7 @@ def main():
         raportLine = raportLine.replace(".", ",")
 
         process.addToRaport(raportLine)
+
 
 main()
 time.sleep(9)
