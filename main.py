@@ -991,8 +991,8 @@ class BakingProcess:
         subject = f"Raport z procesu spiekania z dnia {startDate}"
         file = f"raports/{startDate}.csv"
 
-        send_mail = Mail(subject, message, file)
-        send_mail.send_mail()
+        send_mail = Mail()
+        send_mail.send_mail(subject, message, file)
         logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
