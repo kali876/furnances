@@ -133,8 +133,9 @@ class Mail:
         #smtp.close()
         context = ssl.create_default_context()
         TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
-
+        TIE_server.ehlo()
         TIE_server.starttls(context=context)
+        TIE_server.ehlo()
         TIE_server.login(self.getLogin(), self.getPass())
 
         TIE_server.sendmail(self.getSender(), self.getReceipient(), text)
