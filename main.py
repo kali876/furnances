@@ -106,6 +106,8 @@ class Mail:
         msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
+        print(f"sub: {subject}, mes: {message}, file: {file}")
+
         msg.attach(MIMEText(message, 'plain'))
 
 
