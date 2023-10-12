@@ -97,7 +97,7 @@ class Mail:
 
     def __load(self):
 
-        file = open(f"mail/mailserver.json")
+        file = open(f"./mail/mailserver.json")
 
         data = json.load(file)
 
