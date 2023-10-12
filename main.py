@@ -121,7 +121,9 @@ class Mail:
         msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message, 'plain'))
+        encodeMessage = message.encode('us-ascii')
+
+        msg.attach(MIMEText(encodeMessage, 'plain'))
 
 
         attachment = open(file, 'rb')
