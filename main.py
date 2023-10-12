@@ -97,16 +97,16 @@ class Mail:
 
     def __load(self):
 
-        file = open(f"./mail/mailserver.json")
+        file = open(f"mail/mailserver.json")
 
         data = json.load(file)
 
         #self.__setServers = data["server_id"]
-        self.__setServerAddress = data["server_address"]
-        self.__setReceipient = data["recipients"]
-        self.__setSender = data["sender"]
-        self.__setLogin = data["login"]
-        self.__setPass = ["pass"]
+        self.__setServerAddress(data["server_address"])
+        self.__setReceipient(data["recipients"])
+        self.__setSender(data["sender"])
+        self.__setLogin(data["login"])
+        self.__setPass(data["pass"])
 
     def send_mail(self, subject, message, file):
         msg = MIMEMultipart()
