@@ -115,7 +115,7 @@ class Mail:
         #msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        print(f"sub: {subject}, mes: {message}, file: {file}")
+        print(f"sub: {subject}, mes: {message}, file: {file} serwer:{self.getServerAddress()}")
 
         msg.attach(MIMEText(message))
 
