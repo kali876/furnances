@@ -7,7 +7,7 @@ from sys import maxsize
 import requests
 import logging.handlers as handlers
 import time
-import smtplib
+import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
@@ -131,9 +131,10 @@ class Mail:
         #smtp = smtplib.SMTP(self.getServerAddress())
         #smtp.send_message(msg, self.getSender(), self.getReceipient())
         #smtp.close()
-
+        context = ssl.create_default_context()
         TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
-        TIE_server.starttls()
+
+        TIE_server.starttls(context=context)
         TIE_server.login(self.getLogin(), self.getPass())
 
         TIE_server.sendmail(self.getSender(), self.getReceipient(), text)
