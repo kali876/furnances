@@ -106,8 +106,6 @@ class Mail:
         msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        message = message
-
         msg.attach(MIMEText(message, 'plain'))
 
 
@@ -989,10 +987,10 @@ class BakingProcess:
         startDate = datetime.fromtimestamp(self.getStartTime())
         message = f"Raport z procesu spiekania z dnia {startDate}"
         subject = f"Raport z procesu spiekania z dnia {startDate}"
-        file = f"raports/{startDate}.csv"
+        file = f"./raports/{startDate}.csv"
 
-        send_mail = Mail()
-        send_mail.send_mail(subject, message, file)
+        mail = Mail()
+        mail.send_mail(subject, message, file)
         logger.info(f"Creating raport... TODO")
 
     def deleteProcessFile(self):
