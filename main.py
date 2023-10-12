@@ -47,10 +47,7 @@ class Mail:
     __message = None
     __attachment = None
 
-    def __init__(self, subject, attachment):
-        #self.__message = message
-        self.__attachment = attachment
-        self.__subject = subject
+    def __init__(self):
         self.__load()
 
     def getServers(self):
@@ -63,15 +60,11 @@ class Mail:
     def getServerAddress(self):
         return self.__server_address
     def __setServerAddress(self, smtp):
-        if self.__server_address == None:
-            self.__server_address = []
         self.__server_address = smtp
 
     def getReceipient(self):
         return self.__recipients
     def __setReceipient(self, receipient):
-        if self.__recipients == None:
-            self.__recipients = []
         self.__recipients = receipient
     def __addReceipient(self, receipient):
         if self.__recipients == None:
@@ -80,24 +73,18 @@ class Mail:
 
     def getSender(self):
         return self.__sender
-    def __setServerAddress(self, sender):
-        if self.__sender == None:
-            self.__sender = []
+    def __setSender(self, sender):
         self.__sender = sender
-
     def getLogin(self):
         return self.__login
     def __setLogin(self, login):
-        if self.__login == None:
-            self.__login = []
         self.__login = login
 
     def getPass(self):
         return self.__pass
     def __setPass(self, passwd):
-        if self.__pass == None:
-            self.__pass = []
         self.__pass = passwd
+
 
     def __load(self):
 
@@ -112,16 +99,14 @@ class Mail:
         self.__setLogin=data ["login"]
         self.__setPass=["pass"]
 
-    def send_mail(self, send_from=__sender, send_to=__recipients, subject=__subject, message=__message, file=__attachment,
-                  server=__server_address, port=587, username=__login, password=__pass,
-                  use_tls=True):
+    def send_mail(self, subject, message, file):
         msg = MIMEMultipart()
-        msg['From'] = send_from
-        msg['To'] = send_to
+        msg['From'] = self.getSender()
+        msg['To'] = self.getReceipient()
         msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        message = f"Raport z procesu spiekania"
+        message = message
 
         msg.attach(MIMEText(message, 'plain'))
 
@@ -137,15 +122,15 @@ class Mail:
         text = msg.as_string()
 
 
-        smtp = smtplib.SMTP(server)
-        smtp.send_message(msg,send_from, send_to)
+        smtp = smtplib.SMTP(self.getServerAddress())
+        smtp.send_message(msg,self.getSender(), self.getReceipient())
         smtp.close()
 
-        TIE_server = smtplib.SMTP(server, port)
+        TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
         TIE_server.starttls()
-        TIE_server.login(send_from, password)
+        TIE_server.login(self.getLogin(), self.getPass())
 
-        TIE_server.sendmail(send_from, send_to, text)
+        TIE_server.sendmail(self.getSender(), self.getReceipient(), text)
         TIE_server.quit()
 
 class Messages:
@@ -1006,7 +991,7 @@ class BakingProcess:
         subject = f"Raport z procesu spiekania z dnia {startDate}"
         file = f"raports/{startDate}.csv"
 
-        send_mail = Mail(subject, file)
+        send_mail = Mail(subject, message, file)
         send_mail.send_mail()
         logger.info(f"Creating raport... TODO")
 
