@@ -112,12 +112,12 @@ class Mail:
         msg = MIMEMultipart()
         msg['From'] = self.getSender()
         msg['To'] = self.getReceipient()
-        msg['Date'] = datetime.timestamp(datetime.now())
+        #msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
         print(f"sub: {subject}, mes: {message}, file: {file}")
 
-        msg.attach(MIMEText(message, 'plain'))
+        msg.attach(MIMEText(message))
 
         # attachment = open(file, 'rb')
         #attachment_package = MIMEBase('application', 'octet-stream')
@@ -128,9 +128,9 @@ class Mail:
 
         text = msg.as_string()
 
-        smtp = smtplib.SMTP(self.getServerAddress())
-        smtp.send_message(msg, self.getSender(), self.getReceipient())
-        smtp.close()
+        #smtp = smtplib.SMTP(self.getServerAddress())
+        #smtp.send_message(msg, self.getSender(), self.getReceipient())
+        #smtp.close()
 
         TIE_server = smtplib.SMTP(self.getServerAddress(), 587)
         TIE_server.starttls()
