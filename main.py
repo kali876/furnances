@@ -8,11 +8,9 @@ import requests
 import logging.handlers as handlers
 import time
 import smtplib
-from os.path import basename
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
 from email import encoders
 
 os.chdir("/root/furnances")
@@ -114,7 +112,7 @@ class Mail:
         self.__setLogin=data ["login"]
         self.__setPass=["pass"]
 
-    def send_mail(self, send_from=__sender, send_to=__recipients, subject=__subject, message=__message, files=__attachment,
+    def send_mail(self, send_from=__sender, send_to=__recipients, subject=__subject, message=__message, file=__attachment,
                   server=__server_address, port=587, username=__login, password=__pass,
                   use_tls=True):
         msg = MIMEMultipart()
@@ -123,18 +121,30 @@ class Mail:
         msg['Date'] = formatdate(localtime=True)
         msg['Subject'] = subject
 
-        msg.attach(MIMEText(message, "plain"))
+        msg.attach(MIMEText(message, 'plain'))
 
-        filename = files
-        with open(filename, 'r') as f:
-            part = MIMEApplication(f.read(), Name=basename(filename))
-            part['Content-Disposition'] = 'attachment; filename="{}"'.format(basename(filename))
-        msg.attach(part)
+
+        attachment = open(file, 'rb')
+
+        attachment_package = MIMEBase('application', 'octet-stream')
+        attachment_package.set_payload((attachment).read())
+        encoders.encode_base64(attachment_package)
+        attachment_package.add_header('Content-Disposition', "attachment; filename= " + filename)
+        msg.attach(attachment_package)
+
+        text = msg.as_string()
+
 
         smtp = smtplib.SMTP(server)
         smtp.send_message(msg,send_from, send_to)
         smtp.close()
 
+        TIE_server = smtplib.SMTP(server, port)
+        TIE_server.starttls()
+        TIE_server.login(send_from, password)
+
+        TIE_server.sendmail(send_from, send_to, text)
+        TIE_server.quit()
 
 class Messages:
     __id = None
@@ -888,7 +898,7 @@ class BakingProcess:
 
         self.getFurnance().on()
 
-        self.getFurnance().cyrcfanon()
+        # if self.getFurnance().cyrcfanstatus() == False: self.getFurnance().cyrcfanon()
 
     def getCurrentStep(self):
         currentTime = getCurrentTimestamp()
@@ -1046,9 +1056,6 @@ def main():
         logger.info(f"Process is running")
         logger.info(f"Obecny krok {process.getCurrentStep().getStepNumber()}...")
         process.updatestatus(True)
-        cyrcfanStatus = process.getFurnance().cyrcfanstatus()
-        # if cyrcfanStatus == False:
-        #    process.getFurnance().cyrcfanon()
 
 
         currentTemperature = process.getFurnance().getTemperature()
@@ -1075,7 +1082,7 @@ def main():
                 if process.getFurnance().exhaustValveStatus() != 2 : process.getFurnance().exhaustValveClose()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
             else:
-                if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
+                # if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
                 if process.getFurnance().exhaustValveStatus() != 1 : process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1 :process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
