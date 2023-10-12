@@ -118,7 +118,7 @@ class Mail:
         msg = MIMEMultipart()
         msg['From'] = send_from
         msg['To'] = send_to
-        msg['Date'] = formatdate(localtime=True)
+        msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
         msg.attach(MIMEText(message, 'plain'))
