@@ -38,7 +38,7 @@ logger.addHandler(logHandler)
 
 
 class Mail:
-    __id = None
+    #__id = None
     __server_id = None
     __server_address = None
     __recipients = None
@@ -52,13 +52,13 @@ class Mail:
     def __init__(self):
         self.__load()
 
-    def getServers(self):
-        return self.__server_id
+    #def getServers(self):
+    #    return self.__server_id
 
-    def __setServers(self, servers):
-        if self.__server_id == None:
-            self.__server_id = []
-        self.__server_id = servers
+    #def __setServers(self, servers):
+    #    if self.__server_id == None:
+    #        self.__server_id = []
+    #    self.__server_id = servers
 
     def getServerAddress(self):
         return self.__server_address
@@ -115,7 +115,7 @@ class Mail:
         #msg['Date'] = datetime.timestamp(datetime.now())
         msg['Subject'] = subject
 
-        print(f"sub: {subject}, mes: {message}, file: {file} serwer:{self.getServerAddress()}")
+        print(f"sub: {subject}, mes: {message}, file: {file} serwer:{self.getServerAddress()} sender: {self.getSender()}")
 
         msg.attach(MIMEText(message))
 
