@@ -119,13 +119,12 @@ class Mail:
 
         msg.attach(MIMEText(message, 'plain'))
 
-        attachment = open(file, 'rb')
-
-        attachment_package = MIMEBase('application', 'octet-stream')
-        attachment_package.set_payload(attachment.read())
-        encoders.encode_base64(attachment_package)
-        attachment_package.add_header('Content-Disposition', "attachment; filename= " + file)
-        msg.attach(attachment_package)
+        # attachment = open(file, 'rb')
+        #attachment_package = MIMEBase('application', 'octet-stream')
+        #attachment_package.set_payload(attachment.read())
+        #encoders.encode_base64(attachment_package)
+        #attachment_package.add_header('Content-Disposition', "attachment; filename= " + file)
+        #msg.attach(attachment_package)
 
         text = msg.as_string()
 
