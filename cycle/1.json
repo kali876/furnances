@@ -18,7 +18,13 @@
             "step_number": 3,
             "start_temperature": 365,
             "end_temperature": 220,
-            "duration": 14400
+            "duration": 16200
+        },
+        {
+            "step_number": 4,
+            "start_temperature": 220,
+            "end_temperature": 50,
+            "duration": 5400
         }
     ]
 }

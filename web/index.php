@@ -39,6 +39,16 @@
     <input name="step8-end-temperature" type="number">
     <input name="step8-duration" type="number">
     <br>
+    <label>9</label>
+    <input name="step8-start-temperature" type="number">
+    <input name="step8-end-temperature" type="number">
+    <input name="step8-duration" type="number">
+    <br>
+    <label>10</label>
+    <input name="step8-start-temperature" type="number">
+    <input name="step8-end-temperature" type="number">
+    <input name="step8-duration" type="number">
+    <br>
 
 
     <br>

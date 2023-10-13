@@ -1,24 +1,24 @@
 {
-    "furnance_id": 101,
-    "start_time": 1697193849,
+    "furnance_id": 1,
+    "start_time": 1,
     "steps": [
         {
             "step_number": 1,
-            "start_temperature": 100,
+            "start_temperature": 30,
             "end_temperature": 280,
-            "duration": 14400
+            "duration": 16200
         },
         {
             "step_number": 2,
             "start_temperature": 280,
             "end_temperature": 340,
-            "duration": 10800
+            "duration": 7200
         },
         {
             "step_number": 3,
             "start_temperature": 340,
             "end_temperature": 340,
-            "duration": 14400
+            "duration": 7200
         },
         {
             "step_number": 4,
@@ -30,13 +30,25 @@
             "step_number": 5,
             "start_temperature": 365,
             "end_temperature": 365,
-            "duration": 18000
+            "duration": 7200
         },
         {
             "step_number": 6,
-            "start_temperature": 365,
-            "end_temperature": 340,
-            "duration": 3600
+            "start_temperature": 265,
+            "end_temperature": 280,
+            "duration": 14400
+        },
+        {
+            "step_number": 7,
+            "start_temperature": 280,
+            "end_temperature": 22,
+            "duration": 5400
+        },
+        {
+            "step_number": 8,
+            "start_temperature": 220,
+            "end_temperature": 50,
+            "duration": 5400
         }
     ]
 }
