@@ -1,45 +1,45 @@
 <form action="action.php" method="post">
-    <label>1</label>
+    <label>01</label>
     <input name="step1-start-temperature" type="number">
     <input name="step1-end-temperature" type="number">
     <input name="step1-duration" type="number">
     <br>
-    <label>2</label>
+    <label>02</label>
     <input name="step2-start-temperature" type="number">
     <input name="step2-end-temperature" type="number">
     <input name="step2-duration" type="number">
     <br>
-    <label>3</label>
+    <label>03</label>
     <input name="step3-start-temperature" type="number">
     <input name="step3-end-temperature" type="number">
     <input name="step3-duration" type="number">
     <br>
-    <label>4</label>
+    <label>04</label>
     <input name="step4-start-temperature" type="number">
     <input name="step4-end-temperature" type="number">
     <input name="step4-duration" type="number">
     <br>
-    <label>5</label>
+    <label>05</label>
     <input name="step5-start-temperature" type="number">
     <input name="step5-end-temperature" type="number">
     <input name="step5-duration" type="number">
     <br>
-    <label>6</label>
+    <label>06</label>
     <input name="step6-start-temperature" type="number">
     <input name="step6-end-temperature" type="number">
     <input name="step6-duration" type="number">
     <br>
-    <label>7</label>
+    <label>07</label>
     <input name="step7-start-temperature" type="number">
     <input name="step7-end-temperature" type="number">
     <input name="step7-duration" type="number">
     <br>
-    <label>8</label>
+    <label>08</label>
     <input name="step8-start-temperature" type="number">
     <input name="step8-end-temperature" type="number">
     <input name="step8-duration" type="number">
     <br>
-    <label>9</label>
+    <label>09</label>
     <input name="step8-start-temperature" type="number">
     <input name="step8-end-temperature" type="number">
     <input name="step8-duration" type="number">
