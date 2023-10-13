@@ -4,9 +4,9 @@
     "steps": [
         {
             "step_number": 1,
-            "start_temperature": 100,
+            "start_temperature": 30,
             "end_temperature": 280,
-            "duration": 14400
+            "duration": 16200
         },
         {
             "step_number": 2,
@@ -35,8 +35,14 @@
         {
             "step_number": 6,
             "start_temperature": 365,
-            "end_temperature": 340,
-            "duration": 3600
+            "end_temperature": 280,
+            "duration": 21600
+        },
+        {
+            "step_number": 7,
+            "start_temperature": 280,
+            "end_temperature": 220,
+            "duration": 7200
         }
     ]
 }
