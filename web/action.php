@@ -5,7 +5,7 @@ $process->furnance_id = 101;
 $process->start_time = time();
 $process->steps = Array();
 
-for ($i = 1; $i <= 8; $i++) {
+for ($i = 1; $i <= 10; $i++) {
     if ($_POST["step$i-start-temperature"] != NULL && $_POST["step$i-end-temperature"] != NULL && $_POST["step$i-duration"]) {
         $step = new stdClass();
         $step->step_number = $i;
