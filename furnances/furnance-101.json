@@ -5,15 +5,48 @@
     "cyrc_fans_ids" : [66, 67],
     "exhaust_fans_ids" : [68],
     "cabinet_fans_ids" : [69],
-    "cycle_1" : [50, 51],
-    "cycle_2" : [52, 53],
-    "cycle_3" : [54, 55],
-    "cycle_4" : [56, 57],
-    "cycle_5" : [58, 59],
-    "cycle_6" : [60, 61],
-    "cycle_7" : [62, 63],
-    "cycle_8" : [64, 65],
-    "cycle_9" : [66, 67],
+    "cycle" : [
+        {
+            "id": 1,
+            "check": 50,
+            "confirm": 51
+        },
+        {
+            "id": 2,
+            "check": 52,
+            "confirm": 53
+        },
+        {
+            "id": 3,
+            "check": 54,
+            "confirm": 55
+        },
+        {
+            "id": 4,
+            "check": 56,
+            "confirm": 57
+        },
+        {
+            "id": 5,
+            "check": 58,
+            "confirm": 59
+        },
+        {
+            "id": 6,
+            "check": 60,
+            "confirm": 61
+        },
+        {
+            "id": 7,
+            "check": 62,
+            "confirm": 63
+        },
+        {
+            "id": 8,
+            "check": 64,
+            "confirm": 65
+        },
+        ]
     "valves" : [
         {
             "valve_id": 1,
