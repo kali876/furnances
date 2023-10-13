@@ -1,0 +1,24 @@
+{
+    "furnance_id": 1,
+    "start_time": 1,
+    "steps": [
+        {
+            "step_number": 1,
+            "start_temperature": 30,
+            "end_temperature": 365,
+            "duration": 18000
+        },
+        {
+            "step_number": 2,
+            "start_temperature": 365,
+            "end_temperature": 365,
+            "duration": 14400
+        },
+        {
+            "step_number": 3,
+            "start_temperature": 365,
+            "end_temperature": 220,
+            "duration": 14400
+        }
+    ]
+}
