@@ -8,6 +8,15 @@
     "cyrc_fans_ids" : [66, 67],
     "exhaust_fans_ids" : [68],
     "cabinet_fans_ids" : [69],
+    "cycle_1" : [50, 51],
+    "cycle_2" : [52, 53],
+    "cycle_3" : [54, 55],
+    "cycle_4" : [56, 57],
+    "cycle_5" : [58, 59],
+    "cycle_6" : [60, 61],
+    "cycle_7" : [62, 63],
+    "cycle_8" : [64, 65],
+    "cycle_9" : [66, 67],
     "valves" : [
         {
             "valve_id": 1,
