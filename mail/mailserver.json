@@ -1,8 +1,8 @@
 {
   "server_id": 1,
-  "server_address": "poczta.pavernet.pl",
-  "recipients": "produkcja_tarnow@inbras.com.pl",
-  "sender": "produkcja_tarnow@inbras.com.pl",
-  "login": "produkcja_tarnow@inbras.com.pl",
+  "server_address": "smto.mail.com",
+  "recipients": "mail@mail.com",
+  "sender": "mail@mail.com",
+  "login": "mail@mail.com",
   "pass": "password"
 }
