@@ -110,7 +110,7 @@ class Furnances:
             return False
 
     def isProcessExist(self):
-        existing_proces = os.path.isfile(f"./bakings/furnance-{self.getFurnance()}")
+        existing_proces = os.path.isfile(f"./bakings/furnance-{self.getFurnance()}.json")
         return existing_proces
 
 
