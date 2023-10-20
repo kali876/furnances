@@ -94,14 +94,24 @@ class Furnances:
             self.__addIsProcess(IsProces(isprocess))
 
     def getCheckedCycle(self):
-
         checked_cycle = 0
-
         for cycle in self.getCycle():
             checked_cycle = getstatus(cycle.getId())
             if checked_cycle == 255:
-                print(cycle.getId())
+                # print(cycle.getId())
                 return cycle.getId()
+    def getProcessStart(self):
+        proces_start = 0
+        for start in self.getIsProcess():
+            checked_start = getstatus(start.getId())
+            if checked_start == 255:
+                proces_start = proces_start + proces_start
+                print(proces_start)
+                if proces_start == 510:
+                    return True
+                else:
+                    return False
+
 
 def getstatus(id):
     response = requests.get(
@@ -128,7 +138,9 @@ def processchecker():
     print(files)
     for file in files:
         ampio=Furnances(file)
-        ampio.getCheckedCycle()
+        checked_cycle = ampio.getCheckedCycle()
+        print(checked_cycle)
+
 
 
 
