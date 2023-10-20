@@ -173,8 +173,7 @@ def processchecker():
         else:
             for proces in ampio.getIsProcess():
                 setvalue(proces.getId(), 255)
-            setvalue(ampio.getRunningCycle(), 255)
-            print(ampio.getRunningCycle())
+
 
 
 
