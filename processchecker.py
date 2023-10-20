@@ -167,7 +167,7 @@ def processchecker():
             proces_start = ampio.getProcessStart()
             print(f"który cykl wybrany: {checked_cycle}; czy wystartowany {proces_start}")
             if proces_start == True and checked_cycle != None:
-                print(ampio.savefile())
+                ampio.savefile()
 
 
 
