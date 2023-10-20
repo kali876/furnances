@@ -114,6 +114,16 @@ class Furnances:
         return existing_proces
 
     def loadSchema(self, id):
+        file = open(f"./cycle/{id}.json")
+        data = json.load(file)
+        return data
+
+    def toJson(self,data):
+        json = {
+        "furnance_id": self.getFurnance(),
+        "steps": data,
+        "start_time": time.time()
+        }
 
 
 
@@ -144,7 +154,7 @@ def processchecker():
         ampio=Furnances(file)
         process_already_exist = ampio.isProcessExist()
 
-        if process_already_exist == False
+        if process_already_exist == False:
             checked_cycle = ampio.getCheckedCycle()
             proces_start = ampio.getProcessStart()
 
@@ -153,6 +163,7 @@ def processchecker():
 
 
         print(process_already_exist)
+        print(time.time())
 
 
 
