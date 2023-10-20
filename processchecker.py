@@ -118,11 +118,15 @@ class Furnances:
         data = json.load(file)
         return data
 
+    def getCurrentTimestamp():
+        timestamp = datetime.timestamp(datetime.now())
+        return int(timestamp)
+
     def toJson(self,data):
         json = {
         "furnance_id": self.getFurnance(),
         "steps": data,
-        "start_time": time.time()
+        "start_time": self.getCurrentTimestamp()
         }
 
 
@@ -163,7 +167,7 @@ def processchecker():
 
 
         print(process_already_exist)
-        print(time.time())
+        print(ampio.getCurrentTimestamp())
 
 
 
