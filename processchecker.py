@@ -105,10 +105,10 @@ class Furnances:
         for start in self.getIsProcess():
             proces_start = proces_start + getstatus(start.getId())
             print(f"ID {start.getId()}, Value: {proces_start}")
-            if proces_start == 510:
-                return True
-            else:
-                return False
+        if proces_start == 510:
+            return True
+        else:
+            return False
 
 
 def getstatus(id):
