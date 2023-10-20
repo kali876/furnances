@@ -874,8 +874,8 @@ class BakingProcess:
             CurrentTrend = 0  # Utrzymanie
         elif temperatureDifference < 0:
             CurrentTrend = 2  # Chłodzenie
-        # elif currentStep == len(self.getBakingSteps()):
-        #      CurrentTrend = 3  # Ostatni etap chłodzenia
+        elif currentStep == len(self.getBakingSteps()):
+              CurrentTrend = 3  # Ostatni etap chłodzenia
         return CurrentTrend
 
     def getFurnance(self):
@@ -919,7 +919,7 @@ class BakingProcess:
 
         self.getFurnance().on()
 
-        # if self.getFurnance().cyrcfanstatus() == False: self.getFurnance().cyrcfanon()
+        if self.getFurnance().cyrcfanstatus() == False: self.getFurnance().cyrcfanon()
 
     def getCurrentStep(self):
         currentTime = getCurrentTimestamp()
@@ -1105,7 +1105,7 @@ def main():
                 if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
                 if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
             else:
-                # if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
+                if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
                 if process.getFurnance().exhaustValveStatus() != 1: process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
         elif stepsLeft >= 1:
