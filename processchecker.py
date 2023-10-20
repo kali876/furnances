@@ -100,7 +100,6 @@ class Furnances:
         for cycle in self.getCycle():
             checked_cycle = getstatus(cycle.getId())
             if checked_cycle == 255:
-                # print(cycle.getId())
                 return cycle.getId()
     def getProcessStart(self):
         proces_start = 0
@@ -139,7 +138,6 @@ class Furnances:
     def savefile(self):
         with open(f"bakings/furnance-{self.getFurnance()}.json", "w+") as outfile:
             json.dump(self.toJson(), outfile, indent=4, sort_keys=True)
-        print (self.toJson())
 
 def getstatus(id):
     response = requests.get(
@@ -163,18 +161,18 @@ def setvalue(id, value):
 def processchecker():
 
     files = [file for file in os.listdir("./furnances") if file.endswith('.json')]
-    print(files)
     for file in files:
         ampio=Furnances(file)
         process_already_exist = ampio.isProcessExist()
-        print(f"czy proces istnieje {process_already_exist}")
         if process_already_exist == False:
             checked_cycle = ampio.getCheckedCycle()
             proces_start = ampio.getProcessStart()
-            print(f"który cykl wybrany: {checked_cycle}; czy wystartowany {proces_start}")
             if proces_start == True and checked_cycle != None:
                 ampio.savefile()
-
+        else:
+            for proces in ampio.getIsProcess():
+                setvalue(proces.getId(), 255)
+                print(proces.getId())
 
 
 
