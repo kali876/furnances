@@ -106,7 +106,7 @@ class Furnances:
             checked_start = getstatus(start.getId())
             if checked_start == 255:
                 proces_start = proces_start + proces_start
-                print(proces_start)
+                print(checked_start)
                 if proces_start == 510:
                     return True
                 else:
