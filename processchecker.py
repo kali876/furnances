@@ -95,15 +95,13 @@ class Furnances:
 
     def getCheckedCycle(self):
 
-        checked_cycle = False
+        checked_cycle = 0
 
         for cycle in self.getCycle():
             checked_cycle = getstatus(cycle.getId())
-            if checked_cycle == True:
-                print(checked_cycle)
-                return checked_cycle
-            print(cycle)
-            print(checked_cycle)
+            if checked_cycle == 255:
+                print(cycle.getId())
+                return cycle.getId()
 
 def getstatus(id):
     response = requests.get(
