@@ -42,7 +42,6 @@ class Furnances:
     __startTime = None
     __cycle = None
     __isproces = None
-    __running_cycle = None
 
     def __init__(self, fileName):
         file = open(f"furnances/{fileName}")
@@ -87,12 +86,6 @@ class Furnances:
             self.__isproces = []
         self.__isproces.append(proces)
 
-    def setRunningCycle(self, running):
-        self.__running_cycle = running
-
-    def getRunningCycle(self):
-        return self.__running_cycle
-
     def __load(self, file):
         data = json.load(file)
         self.__setFurnance(data["furnance_id"])
@@ -136,6 +129,7 @@ class Furnances:
     def toJson(self):
         json = {
         "furnance_id": self.getFurnance(),
+        "cycle": self.getCheckedCycle(),
         "start_time": self.getCurrentTimestamp(),
         "steps": self.loadSchema(self.getCheckedCycle())
         }
@@ -145,7 +139,6 @@ class Furnances:
     def savefile(self):
         with open(f"bakings/furnance-{self.getFurnance()}.json", "w+") as outfile:
             json.dump(self.toJson(), outfile, indent=4, sort_keys=True)
-        self.setRunningCycle(self.getCheckedCycle())
 
 def getstatus(id):
     response = requests.get(
