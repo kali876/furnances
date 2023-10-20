@@ -233,7 +233,13 @@ class Messages:
             verify=False,
             timeout=10,
         )
-
+    def showrunningcycle(self, cycleid):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(cycleid)}/setValue/255",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
 
 class Thermometer:
     __id = None
@@ -841,6 +847,7 @@ class BakingProcess:
     __furnance = None
     __startTime = None
     __processFileName = None
+    __running_process = None
 
     def __init__(self, fileName):
         file = open(f"bakings/{fileName}")
@@ -886,6 +893,12 @@ class BakingProcess:
     def getProcessFileName(self):
         return self.__processFileName
 
+    def __setRunningProcess(self, running):
+        self.__running_process = running
+
+    def getRunningProcess(self):
+        return self.__running_process
+
     def __setProcessFileName(self, filename):
         self.__processFileName = filename
 
@@ -901,6 +914,8 @@ class BakingProcess:
         self.__setFurnance(Furnance(data["furnance_id"]))
 
         self.__setStartTime(data["start_time"])
+
+        self.__setRunningProcess(data["cycle"])
 
         self.getFurnance().on()
 
@@ -975,6 +990,7 @@ class BakingProcess:
             self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
             self.getFurnance().getMessages().showprocessstarttime(datetime.fromtimestamp(self.getStartTime()).strftime("%Y%m%d-%H%M%S"))
             self.getFurnance().getMessages().showprocesstimeleft(self.getProcesTimeLeft())
+            self.getFurnance().getMessages().showrunningcycle(self.getRunningProcess())
         else:
             self.getFurnance().getMessages().showsteps("----")
             self.getFurnance().getMessages().showcurrentstep("----")
