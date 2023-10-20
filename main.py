@@ -132,7 +132,7 @@ class Messages:
     __CurrentStep = None
     __CurrentTemp = None
     __DesireTemp = None
-    __StepTimeLeft = None
+    __ProcessStartTime = None
     __ProcessTimeLeft = None
 
     def __init__(self, *args):
@@ -141,7 +141,7 @@ class Messages:
         self.__setCurrentStep(args[0]["message_current_step"])
         self.__setCurrentTemp(args[0]["message_current_temp"])
         self.__setDesireTemp(args[0]["message_desire_temp"])
-        self.__setStepTimeLeft(args[0]["message_step_time_left"])
+        self.__setProcessStartTime(args[0]["message_process_start_time"])
         self.__setProcessTimeLeft(args[0]["message_process_time_left"])
 
     def getId(self):
@@ -157,34 +157,34 @@ class Messages:
         self.__Steps = steps
 
     def getCurrentStep(self):
-        return self.__setCurrentStep
+        return self.__CurrentStep
 
     def __setCurrentStep(self, step):
-        self.__setCurrentStep = step
+        self.__CurrentStep = step
 
     def getCurrentTemp(self):
-        return self.__setCurrentTemp
+        return self.__CurrentTemp
 
     def __setCurrentTemp(self, temp):
-        self.__setCurrentTemp = temp
+        self.__CurrentTemp = temp
 
     def getDesireTemp(self):
-        return self.__setDesireTemp
+        return self.__DesireTemp
 
     def __setDesireTemp(self, temp):
-        self.__setDesireTemp = temp
+        self.__DesireTemp = temp
 
-    def getStepTimeLeft(self):
-        return self.__setStepTimeLeft
+    def getProcessStartTime(self):
+        return self.__ProcessStartTime
 
-    def __setStepTimeLeft(self, st_time):
-        self.__setStepTimeLeft = st_time
+    def __setProcessStartTime(self, st_time):
+        self.__ProcesStartTime = st_time
 
     def getProcessTimeLeft(self):
-        return self.__setProcessTimeLeft
+        return self.__ProcessTimeLeft
 
     def __setProcessTimeLeft(self, pr_time):
-        self.__setProcessTimeLeft = pr_time
+        self.__ProcessTimeLeft = pr_time
 
     def showsteps(self, steps):
         requests.get(
@@ -218,7 +218,7 @@ class Messages:
             timeout=10,
         )
 
-    def showsteptimeleft(self, stime):
+    def showprocessstarttime(self, stime):
         requests.get(
             f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{stime}",
             headers=headers,
@@ -973,7 +973,7 @@ class BakingProcess:
             self.getFurnance().getMessages().showcurrentstep(self.getCurrentStep().getStepNumber())
             self.getFurnance().getMessages().showcurrenttemp(self.getFurnance().getTemperature())
             self.getFurnance().getMessages().showdesiretemp(self.getDesiredTemperature())
-            self.getFurnance().getMessages().showsteptimeleft(self.getStepTimeLeft())
+            self.getFurnance().getMessages().showprocessstarttime(datetime.fromtimestamp(self.getStartTime()).strftime("%Y%m%d-%H%M%S"))
             self.getFurnance().getMessages().showprocesstimeleft(self.getProcesTimeLeft())
         else:
             self.getFurnance().getMessages().showsteps("----")
@@ -1019,18 +1019,18 @@ class BakingProcess:
         logger.info(f"Deleting file ./bakings/{self.getProcessFileName()}")
         os.remove(f"./bakings/{self.getProcessFileName()}")
 
-    def toJSON(self):
+    def toJSON(self, furnance_id):
 
         json = {
-            "furnance_id": 101,
+            "furnance_id": furnance_id,
             "steps": [step.toJSON() for step in self.getBakingSteps()],
             "start_time": self.getStartTime()
         }
 
         return json
 
-    def saveToFile(self):
-        with open(f"bakings/furnance-1.json", "w+") as outfile:
+    def saveToFile(self, furnance_id):
+        with open(f"bakings/furnance-{furnance_id}.json", "w+") as outfile:
             json.dump(self.toJSON(), outfile, indent=4, sort_keys=True)
 
 
