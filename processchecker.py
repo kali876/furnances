@@ -122,18 +122,18 @@ class Furnances:
         timestamp = datetime.timestamp(datetime.now())
         return int(timestamp)
 
-    def toJson(self,data):
+    def toJson(self):
         json = {
         "furnance_id": self.getFurnance(),
         "start_time": self.getCurrentTimestamp(),
-        "steps": data
+        "steps": self.loadSchema(self.getCheckedCycle())
         }
         return json
 
 
-    def savefile(self, json):
+    def savefile(self):
 
-        print (json)
+        print (self.toJson())
 
 def getstatus(id):
     response = requests.get(
@@ -171,7 +171,7 @@ def processchecker():
             print(checked_cycle)
             print(proces_start)
 
-        print(checked_cycle)
+        print(ampio.savefile())
         print(process_already_exist)
         print(ampio.getCurrentTimestamp())
         print()
