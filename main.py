@@ -762,7 +762,7 @@ class Furnance:
     def startbuttonsstatus(self):
         buttons = False
         for startbuttons in self.getStartButtons():
-            logger.info(f" Status przycisków startu {startbuttons.status}....")
+            print(f" Status przycisków startu {startbuttons.status}....")
             if startbuttons.status > 0 and buttons == False:
                 buttons = True
             logger.info(f" Status przycisków startu {buttons}....")
