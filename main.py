@@ -1147,8 +1147,8 @@ def main():
             process.getFurnance().exhaustfanoff()
             process.getFurnance().off()
             process.updatestatus(False)
-            process.createFinalRaport()
             process.deleteProcessFile()
+            process.createFinalRaport()
             continue
 
         logger.info(f"Process is running")
