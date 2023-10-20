@@ -113,6 +113,8 @@ class Furnances:
         existing_proces = os.path.isfile(f"./bakings/furnance-{self.getFurnance()}.json")
         return existing_proces
 
+    def loadSchema(self, id):
+
 
 
 def getstatus(id):
