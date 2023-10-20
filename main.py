@@ -1031,7 +1031,7 @@ class BakingProcess:
 
     def saveToFile(self, furnance_id):
         with open(f"bakings/furnance-{furnance_id}.json", "w+") as outfile:
-            json.dump(self.toJSON(), outfile, indent=4, sort_keys=True)
+            json.dump(self.toJSON(furnance_id), outfile, indent=4, sort_keys=True)
 
 
 def main():
