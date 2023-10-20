@@ -1073,8 +1073,8 @@ class BakingProcess:
 
     def isFinished(self):
 
-
-        logger.info(f"Przysisk startu w isFinish{self.getFurnance().startbuttonsstatus()}")
+        if self.getFurnance().startbuttonsstatus() == False
+            return True
 
         currentTime = getCurrentTimestamp()
         time = self.getStartTime()
