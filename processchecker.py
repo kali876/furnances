@@ -35,6 +35,8 @@ class IsProces:
     def __setId(self, id):
         self.__id = id
 
+
+
 class Furnances:
     __furnance_id = None
     __startTime = None
@@ -116,7 +118,10 @@ class Furnances:
     def loadSchema(self, id):
         file = open(f"./cycle/{id}.json")
         data = json.load(file)
-        return data
+        steps = []
+        for step in data["steps"]:
+            steps.append(step)
+        return steps
 
     def getCurrentTimestamp(self):
         timestamp = datetime.timestamp(datetime.now())
