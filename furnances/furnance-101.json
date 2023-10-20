@@ -5,48 +5,8 @@
     "cyrc_fans_ids" : [66, 67],
     "exhaust_fans_ids" : [68],
     "cabinet_fans_ids" : [69],
-    "cycle" : [
-        {
-            "id": 1,
-            "check": 50,
-            "confirm": 51
-        },
-        {
-            "id": 2,
-            "check": 52,
-            "confirm": 53
-        },
-        {
-            "id": 3,
-            "check": 54,
-            "confirm": 55
-        },
-        {
-            "id": 4,
-            "check": 56,
-            "confirm": 57
-        },
-        {
-            "id": 5,
-            "check": 58,
-            "confirm": 59
-        },
-        {
-            "id": 6,
-            "check": 60,
-            "confirm": 61
-        },
-        {
-            "id": 7,
-            "check": 62,
-            "confirm": 63
-        },
-        {
-            "id": 8,
-            "check": 64,
-            "confirm": 65
-        },
-        ]
+    "cycle_ids" : [50, 51, 52, 53, 54, 55, 56, 57],
+    "isprocess": [62, 63],
     "valves" : [
         {
             "valve_id": 1,
@@ -72,7 +32,7 @@
             "message_current_step": 22,
             "message_current_temp": 23,
             "message_desire_temp": 24,
-            "message_step_time_left": 25,
+            "message_process_start_time": 25,
             "message_process_time_left": 26
         }
         ]
