@@ -161,10 +161,11 @@ def processchecker():
     for file in files:
         ampio=Furnances(file)
         process_already_exist = ampio.isProcessExist()
-
+        print(f"czy proces istnieje {process_already_exist}")
         if process_already_exist == False:
             checked_cycle = ampio.getCheckedCycle()
             proces_start = ampio.getProcessStart()
+            print(f"który cykl wybrany: {checked_cycle}; czy wystartowany {proces_start}")
             if proces_start == True and checked_cycle != None:
                 print(ampio.savefile())
 
