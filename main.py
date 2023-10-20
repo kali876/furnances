@@ -220,7 +220,7 @@ class Messages:
 
     def showprocessstarttime(self, stime):
         requests.get(
-            f"http://{SERVER_URL}:8060/api/set/{str(self.getStepTimeLeft())}/setText/{stime}",
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getProcessStartTime())}/setText/{stime}",
             headers=headers,
             verify=False,
             timeout=10,
