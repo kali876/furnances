@@ -132,7 +132,8 @@ class Furnances:
 
 
     def savefile(self):
-
+        with open(f"bakings/furnance-{self.getFurnance()}.json", "w+") as outfile:
+            json.dump(self.toJson(), outfile, indent=4, sort_keys=True)
         print (self.toJson())
 
 def getstatus(id):
