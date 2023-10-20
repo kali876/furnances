@@ -1081,7 +1081,7 @@ class BakingProcess:
 
         if currentTime >= time:
             return True
-        if self.getFurnance().startbuttonsstatus() == False
+        if self.getFurnance().startbuttonsstatus() == False:
             return True
 
         return False
