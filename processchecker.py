@@ -140,12 +140,16 @@ def processchecker():
     print(files)
     for file in files:
         ampio=Furnances(file)
-        checked_cycle = ampio.getCheckedCycle()
-        proces_start = ampio.getProcessStart()
         process_already_exist = ampio.isProcessExist()
 
-        print(checked_cycle)
-        print(proces_start)
+        if process_already_exist == False
+            checked_cycle = ampio.getCheckedCycle()
+            proces_start = ampio.getProcessStart()
+
+            print(checked_cycle)
+            print(proces_start)
+
+
         print(process_already_exist)
 
 
