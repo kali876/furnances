@@ -1226,13 +1226,13 @@ def main():
 
 
 main()
-time.sleep(9)
+time.sleep(8)
 main()
-time.sleep(9)
+time.sleep(8)
 main()
-time.sleep(9)
+time.sleep(8)
 main()
-time.sleep(9)
+time.sleep(8)
 main()
-time.sleep(9)
+time.sleep(8)
 main()
