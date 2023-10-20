@@ -170,21 +170,9 @@ def processchecker():
             proces_start = ampio.getProcessStart()
             if proces_start == True and checked_cycle != None:
                 ampio.savefile()
-        else:
-            for proces in ampio.getIsProcess():
-                setvalue(proces.getId(), 255)
 
 
 
 
 
 processchecker()
-time.sleep(9)
-processchecker()
-time.sleep(9)
-processchecker()
-time.sleep(9)
-processchecker()
-time.sleep(9)
-processchecker()
-time.sleep(9)

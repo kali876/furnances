@@ -241,6 +241,7 @@ class Messages:
             timeout=10,
         )
 
+
 class Thermometer:
     __id = None
 
@@ -351,6 +352,42 @@ class CyrcFan:
 
         return json
 
+class StartButton:
+    __id = None
+
+    def __init__(self, id):
+        self.__setId(id)
+
+    def getId(self):
+        return self.__id
+
+    def __setId(self, id):
+        self.__id = id
+
+    def on(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/255",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def off(self):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/set/{str(self.getId())}/setValue/0",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+
+    def status(self):
+        response = requests.get(
+            f"http://{SERVER_URL}:8060/api/json/device/{str(self.getId())}/state",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
+        return int(json.loads(response.text)["Results"]["state"])
 
 class ExhaustFan:
     __id = None
@@ -523,6 +560,7 @@ class Furnance:
     __exhaustfans = None
     __valves = None
     __messages = None
+    __startbuttons = None
 
     def __init__(self, id):
         self.__setId(id)
@@ -711,10 +749,21 @@ class Furnance:
             heater.off()
         logger.info(f"Turn OFF heaters")
 
+    def startbuttonson(self):
+        for startbutton in self.getStartButtons():
+            startbutton.on()
+        logger.info(f"Turn ON Start Buttons")
+
+    def startbuttonsoff(self):
+        for startbutton in self.getStartButtons():
+            startbutton.off()
+        logger.info(f"Turn OFF Start Buttons")
+
     def cyrcfanon(self):
         for cyrcefan in self.getCyrcFans():
             cyrcefan.on()
         logger.info(f"Turn ON cycle fan")
+
 
     def cyrcfanoff(self):
         for cyrcefan in self.getCyrcFans():
@@ -753,6 +802,18 @@ class Furnance:
             fan = fan + exhaustfan.status()
             # logger.info(f" Status wentyaltorów  cyrkulacyjnych {fan}....")
         return fan
+    def getStartButtons(self):
+        return self.__startbuttons
+
+    def setStartButtons(self, buttons):
+        if self.__startbuttons == None:
+            self.__startbuttons = []
+        self.__startbuttons = buttons
+
+    def __addStartButtons(self, buttons):
+        if self.__startbuttons == None:
+            self.__startbuttons = []
+        self.__startbuttons.append(buttons)
 
     def __load(self):
 
@@ -772,6 +833,8 @@ class Furnance:
             self.__addValve(Valve(valve))
         for messages in data["messages"]:
             self.__setMessages(Messages(messages))
+        for startbuttons in data["isprocess"]:
+            self.__addStartButtons(StartButton(startbuttons))
 
     def toJSON(self):
 
@@ -991,6 +1054,8 @@ class BakingProcess:
             self.getFurnance().getMessages().showprocessstarttime(datetime.fromtimestamp(self.getStartTime()).strftime("%Y%m%d-%H%M%S"))
             self.getFurnance().getMessages().showprocesstimeleft(self.getProcesTimeLeft())
             self.getFurnance().getMessages().showrunningcycle(self.getRunningProcess())
+            self.getFurnance().startbuttonson()
+
         else:
             self.getFurnance().getMessages().showsteps("----")
             self.getFurnance().getMessages().showcurrentstep("----")
@@ -1067,6 +1132,7 @@ def main():
 
         if process.isFinished() == True:
             logger.info(f"Process is finished!")
+            process.getFurnance().startbuttonsoff()
             process.getFurnance().heateroff()
             process.getFurnance().cyrcfanoff()
             process.getFurnance().exhaustfanoff()
