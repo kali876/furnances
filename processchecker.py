@@ -118,7 +118,7 @@ class Furnances:
         data = json.load(file)
         return data
 
-    def getCurrentTimestamp():
+    def getCurrentTimestamp(self):
         timestamp = datetime.timestamp(datetime.now())
         return int(timestamp)
 
