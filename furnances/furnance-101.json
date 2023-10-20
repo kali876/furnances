@@ -2,9 +2,9 @@
     "furnance_id" : 101,
     "thermometers_ids" : [87, 88, 89, 90],
     "heaters_ids" : [41, 42, 43, 44, 45, 46],
-    "cyrc_fans_ids" : [66, 67],
-    "exhaust_fans_ids" : [68],
-    "cabinet_fans_ids" : [69],
+    "cyrc_fans_ids" : [4, 5],
+    "exhaust_fans_ids" : [6],
+    "cabinet_fans_ids" : [7],
     "cycle_ids" : [50, 51, 52, 53, 54, 55, 56, 57],
     "isprocess": [62, 63],
     "valves" : [
