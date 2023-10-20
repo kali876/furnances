@@ -760,13 +760,13 @@ class Furnance:
         logger.info(f"Turn OFF Start Buttons")
 
     def startbuttonsstatus(self):
-        buttons = False
-        for startbuttons in self.getStartButtons():
-            print(f" Status przycisków startu {startbuttons.status}....")
-            if startbuttons.status > 0 and buttons == False:
-                buttons = True
-            logger.info(f" Status przycisków startu {buttons}....")
-        return buttons
+        button = False
+        for buttons in self.getStartButtons():
+            print(f" Status przycisków startu {buttons.status}....")
+            if buttons.status > 0 and button == False:
+                button = True
+            logger.info(f" Status przycisków startu {button}....")
+        return button
 
     def cyrcfanon(self):
         for cyrcefan in self.getCyrcFans():
