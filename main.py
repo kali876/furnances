@@ -916,7 +916,7 @@ class BakingProcess:
         self.__setStartTime(data["start_time"])
 
         self.__setRunningProcess(data["cycle"])
-
+        print(data["cycle"])
         self.getFurnance().on()
 
         # if self.getFurnance().cyrcfanstatus() == False: self.getFurnance().cyrcfanon()
