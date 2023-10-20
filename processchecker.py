@@ -140,6 +140,7 @@ def processchecker():
         ampio=Furnances(file)
         checked_cycle = ampio.getCheckedCycle()
         print(checked_cycle)
+        print(ampio.getIsProcess())
 
 
 
