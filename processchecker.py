@@ -102,6 +102,7 @@ class Furnances:
             if checked_cycle == True:
                 print(checked_cycle)
                 return checked_cycle
+            print(cycle)
             print(checked_cycle)
 
 def getstatus(id):
