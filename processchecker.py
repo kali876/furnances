@@ -104,11 +104,15 @@ class Furnances:
         proces_start = 0
         for start in self.getIsProcess():
             proces_start = proces_start + getstatus(start.getId())
-            print(f"ID {start.getId()}, Value: {proces_start}")
         if proces_start == 510:
             return True
         else:
             return False
+
+    def isProcessExist(self):
+        existing_proces = os.path.isfile(f"./bakings/furnance-{self.getFurnance()}")
+        return existing_proces
+
 
 
 def getstatus(id):
@@ -137,8 +141,12 @@ def processchecker():
     for file in files:
         ampio=Furnances(file)
         checked_cycle = ampio.getCheckedCycle()
+        proces_start = ampio.getProcessStart()
+        process_already_exist = ampio.isProcessExist()
+
         print(checked_cycle)
-        print(ampio.getProcessStart())
+        print(proces_start)
+        print(process_already_exist)
 
 
 
