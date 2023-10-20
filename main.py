@@ -1073,9 +1073,6 @@ class BakingProcess:
 
     def isFinished(self):
 
-        if self.getFurnance().startbuttonsstatus() == False
-            return True
-
         currentTime = getCurrentTimestamp()
         time = self.getStartTime()
 
@@ -1083,6 +1080,8 @@ class BakingProcess:
             time = time + step.getDuration()
 
         if currentTime >= time:
+            return True
+        if self.getFurnance().startbuttonsstatus() == False
             return True
 
         return False
