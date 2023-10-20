@@ -759,11 +759,18 @@ class Furnance:
             startbutton.off()
         logger.info(f"Turn OFF Start Buttons")
 
+    def startbuttonsstatus(self):
+        buttons = False
+        for startbuttons in self.getStartButtons():
+            if startbuttons.status > 0 and buttons == False:
+                buttons = True
+            logger.info(f" Status przycisków startu {buttons}....")
+        return buttons
+
     def cyrcfanon(self):
         for cyrcefan in self.getCyrcFans():
             cyrcefan.on()
         logger.info(f"Turn ON cycle fan")
-
 
     def cyrcfanoff(self):
         for cyrcefan in self.getCyrcFans():
@@ -1065,6 +1072,8 @@ class BakingProcess:
             self.getFurnance().getMessages().showprocesstimeleft("----")
 
     def isFinished(self):
+
+        self.getFurnance().startbuttonsstatus()
 
         currentTime = getCurrentTimestamp()
         time = self.getStartTime()
