@@ -161,20 +161,13 @@ def processchecker():
     for file in files:
         ampio=Furnances(file)
         process_already_exist = ampio.isProcessExist()
-        checked_cycle = ampio.getCheckedCycle()
+
         if process_already_exist == False:
-
+            checked_cycle = ampio.getCheckedCycle()
             proces_start = ampio.getProcessStart()
-            #if checked_cycle
-            #if proces_start == True:
-            #    ampio.loadSchema()
-            print(checked_cycle)
-            print(proces_start)
+            if proces_start == True and checked_cycle != None:
+                print(ampio.savefile())
 
-        print(ampio.savefile())
-        print(process_already_exist)
-        print(ampio.getCurrentTimestamp())
-        print()
 
 
 
