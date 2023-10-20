@@ -764,7 +764,7 @@ class Furnance:
         for buttons in self.getStartButtons():
             if buttons.status() > 0 and button == False:
                 button = True
-            logger.info(f" Status przycisków startu {button}....")
+        logger.info(f" Status przycisków startu {button}....")
         return button
 
     def cyrcfanon(self):
