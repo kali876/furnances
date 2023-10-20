@@ -127,5 +127,6 @@ def processchecker():
     files = [file for file in os.listdir("./furnances") if file.endswith('.json')]
     for file in files:
         ampio=Furnances(file)
+        ampio.getCheckedCycle()
 
 
