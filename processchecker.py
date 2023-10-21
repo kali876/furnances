@@ -157,7 +157,13 @@ def setvalue(id, value):
         timeout=10,
     )
 
-
+def pushnotifi(message):
+    requests.get(
+        f"http://{SERVER_URL}:8060/api/pushNotification/{message}",
+        headers=headers,
+        verify=False,
+        timeout=10,
+    )
 
 def processchecker():
 
@@ -170,6 +176,7 @@ def processchecker():
             proces_start = ampio.getProcessStart()
             if proces_start == True and checked_cycle != None:
                 ampio.savefile()
+                pushnotifi(f"Proces spiekania został uruchomiony")
 
 
 
