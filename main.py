@@ -240,6 +240,13 @@ class Messages:
             verify=False,
             timeout=10,
         )
+    def pushnotifi(self, message):
+        requests.get(
+            f"http://{SERVER_URL}:8060/api/pushNotification/{message}",
+            headers=headers,
+            verify=False,
+            timeout=10,
+        )
 
 
 class Thermometer:
@@ -1052,6 +1059,9 @@ class BakingProcess:
         processTimeLeft = round(processTimeLeft, 0)
         return processTimeLeft
 
+    def pushnotifi(self, message):
+        self.getFurnance().getMessages().pushnotifi(message)
+
     def updatestatus(self, inprogress):
         if inprogress == True:
             self.getFurnance().getMessages().showsteps(len(self.getBakingSteps()))
@@ -1148,7 +1158,9 @@ def main():
             process.getFurnance().off()
             process.updatestatus(False)
             process.deleteProcessFile()
+            process.pushnotifi(f"Proces spiekania został ukońcony")
             process.createFinalRaport()
+            process.pushnotifi(f"Raport z procesu spiekania został wysłany mailem.")
             continue
 
         logger.info(f"Process is running")
