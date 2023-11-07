@@ -190,7 +190,9 @@ def processchecker():
                 pushnotifi(f"Proces spiekania został uruchomiony")
         else:
             furnance_main=Furnance(furnance.getFurnance())
+            print(furnance.getFurnance())
             curent_temp = furnance_main.getTemperature()
+            print(curent_temp)
             if curent_temp > 100:
                 furnance_main.exhaustValveOpen()
                 furnance_main.freshairValveOpen()
