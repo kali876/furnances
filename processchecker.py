@@ -36,7 +36,7 @@ class IsProces:
         self.__id = id
 
 class Furnances:
-    __furnance_id = None
+    __furnance = None
     __startTime = None
     __cycle = None
     __isproces = None
@@ -124,19 +124,6 @@ class Furnances:
         timestamp = datetime.timestamp(datetime.now())
         return int(timestamp)
 
-    def getTemperature(self):
-
-        temperature = 0
-
-        for thermometer in self.getThermometers():
-            temperature = temperature + thermometer.getTemperature()
-
-        temperature = temperature / len(self.getThermometers())
-
-        temperature = round(temperature, 2)
-
-        return temperature
-
     def toJson(self):
         json = {
         "furnance_id": self.getFurnance(),
@@ -175,6 +162,19 @@ def pushnotifi(message):
         verify=False,
         timeout=10,
     )
+def setFurnanceFans(id):
+    furnance=Furnance(id)
+    curent_temp = furnance.getTemperature()
+    if curent_temp > 100:
+        furnance.exhaustValveOpen()
+        furnance.freshairValveOpen()
+        furnance.cyrcfanon()
+        furnance.exhaustfanon()
+    else:
+        furnance.heateroff()
+        furnance.cyrcfanoff()
+        furnance.exhaustfanoff()
+
 
 def processchecker():
 
@@ -183,25 +183,13 @@ def processchecker():
         furnance=Furnances(file)
         process_already_exist = furnance.isProcessExist()
         if process_already_exist == False:
+            setFurnanceFans(furnance.getFurnance())
             checked_cycle = furnance.getCheckedCycle()
             proces_start = furnance.getProcessStart()
             if proces_start == True and checked_cycle != None:
                 furnance.savefile()
                 pushnotifi(f"Proces spiekania został uruchomiony")
-        else:
-            furnance_main=Furnance(furnance.getFurnance())
-            print(furnance.getFurnance())
-            curent_temp = furnance_main.getTemperature()
-            print(curent_temp)
-            if curent_temp > 100:
-                furnance_main.exhaustValveOpen()
-                furnance_main.freshairValveOpen()
-                furnance_main.cyrcfanon()
-                furnance_main.exhaustfanon()
-            else:
-                furnance_main.heateroff()
-                furnance_main.cyrcfanoff()
-                furnance_main.exhaustfanoff()
+
 
 
 
