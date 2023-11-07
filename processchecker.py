@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import os
 import requests
-import time
+from main import Furnance
 
 os.chdir("/root/furnances")
 
@@ -34,8 +34,6 @@ class IsProces:
 
     def __setId(self, id):
         self.__id = id
-
-
 
 class Furnances:
     __furnance_id = None
@@ -126,6 +124,19 @@ class Furnances:
         timestamp = datetime.timestamp(datetime.now())
         return int(timestamp)
 
+    def getTemperature(self):
+
+        temperature = 0
+
+        for thermometer in self.getThermometers():
+            temperature = temperature + thermometer.getTemperature()
+
+        temperature = temperature / len(self.getThermometers())
+
+        temperature = round(temperature, 2)
+
+        return temperature
+
     def toJson(self):
         json = {
         "furnance_id": self.getFurnance(),
@@ -169,14 +180,26 @@ def processchecker():
 
     files = [file for file in os.listdir("./furnances") if file.endswith('.json')]
     for file in files:
-        ampio=Furnances(file)
-        process_already_exist = ampio.isProcessExist()
+        furnance=Furnances(file)
+        process_already_exist = furnance.isProcessExist()
         if process_already_exist == False:
-            checked_cycle = ampio.getCheckedCycle()
-            proces_start = ampio.getProcessStart()
+            checked_cycle = furnance.getCheckedCycle()
+            proces_start = furnance.getProcessStart()
             if proces_start == True and checked_cycle != None:
-                ampio.savefile()
+                furnance.savefile()
                 pushnotifi(f"Proces spiekania został uruchomiony")
+        else:
+            furnance_main=Furnance(furnance.getFurnance())
+            curent_temp = furnance_main.getTemperature()
+            if curent_temp > 100:
+                furnance_main.exhaustValveOpen()
+                furnance_main.freshairValveOpen()
+                furnance_main.cyrcfanon()
+                furnance_main.exhaustfanon()
+            else:
+                furnance_main.heateroff()
+                furnance_main.cyrcfanoff()
+                furnance_main.exhaustfanoff()
 
 
 
