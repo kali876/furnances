@@ -2,6 +2,8 @@
 from datetime import datetime
 import json
 import os
+import logging
+import logging.handlers as handlers
 import requests
 from main import Furnance
 
@@ -10,6 +12,17 @@ os.chdir("/root/furnances")
 SERVER_URL = "192.168.9.100"
 AUTH_TOKEN = "YWRtaW46d3lXYTJ4ODJ4eFQj"
 headers = {"Authorization": f"Basic {AUTH_TOKEN}"}
+
+logFilename = f"bakings-script.log"
+logger = logging.getLogger('furnances')
+
+logFormatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+logger.setLevel(logging.INFO)
+
+logHandler = logging.handlers.RotatingFileHandler(logFilename, maxBytes=100000000, backupCount=2)
+
+logHandler.setFormatter(logFormatter)
+logger.addHandler(logHandler)
 
 class Cycle:
     __id = None
@@ -107,7 +120,14 @@ class Furnances:
             return True
         else:
             return False
-
+    def getProcessStop(self):
+        proces_stop = 0
+        for stop in self.getIsProcess():
+            proces_stop = proces_stop + getstatus(stop.getId())
+        if proces_stop == 0:
+            return True
+        else:
+            return False
     def isProcessExist(self):
         existing_proces = os.path.isfile(f"./bakings/furnance-{self.getFurnance()}.json")
         return existing_proces
@@ -189,6 +209,12 @@ def processchecker():
             if proces_start == True and checked_cycle != None:
                 furnance.savefile()
                 pushnotifi(f"Proces spiekania został uruchomiony")
+        else:
+            proces_stop = furnance.getProcessStop()
+            if proces_stop == True:
+                logger.info(f"Deleting file ./bakings/{file}")
+                os.remove(f"./bakings/{file}")
+
 
 
 

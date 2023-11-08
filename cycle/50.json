@@ -22,7 +22,7 @@
             "step_number": 4,
             "start_temperature": 220,
             "end_temperature": 50,
-            "duration": 5400
+            "duration": 10800
         }
     ]
 }
