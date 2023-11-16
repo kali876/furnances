@@ -185,7 +185,7 @@ def pushnotifi(message):
 def setFurnanceFans(id):
     furnance=Furnance(id)
     curent_temp = furnance.getTemperature()
-    if curent_temp > 100:
+    if curent_temp > 60:
         furnance.exhaustValveOpen()
         furnance.freshairValveOpen()
         furnance.cyrcfanon()

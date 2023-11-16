@@ -565,6 +565,7 @@ class Furnance:
     __heaters = None
     __cyrcfans = None
     __exhaustfans = None
+    __exhaustfanflag = None
     __valves = None
     __messages = None
     __startbuttons = None
@@ -662,6 +663,11 @@ class Furnance:
             self.__valves = []
         self.__valves.append(valve)
 
+    def getValveByName(self, name):
+        for valves in self.getValves():
+            if valves.getName() == name:
+                return valves
+
     def getMessages(self):
         return self.__messages
 
@@ -670,10 +676,11 @@ class Furnance:
             self.__messages = []
         self.__messages = messages
 
-    def getValveByName(self, name):
-        for valves in self.getValves():
-            if valves.getName() == name:
-                return valves
+    def getExhaustFanFlag(self):
+        return self.__exhaustfanflag
+
+    def __setExhaustFanFlag(self, id):
+        self.__exhaustfanflag = id
 
     def exhaustValveOpen(self):
         exhaustvalve = self.getValveByName("exhaust")
@@ -849,6 +856,7 @@ class Furnance:
             self.__setMessages(Messages(messages))
         for startbuttons in data["isprocess"]:
             self.__addStartButtons(StartButton(startbuttons))
+        self.__setExhaustFanFlag(data["exhaust_fan_flag"])
 
     def toJSON(self):
 
