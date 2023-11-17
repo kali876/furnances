@@ -1203,7 +1203,7 @@ def main():
                 if process.getFurnance().exhaustfanstatus() == False : process.getFurnance().exhaustfanon()
                 if process.getFurnance().exhaustValveStatus() != 1: process.getFurnance().exhaustValveOpen()
                 if process.getFurnance().freshairValveStatus() != 1: process.getFurnance().freshairValveOpen()
-        elif stepsLeft >= 1:
+        elif stepsLeft >= 2:
             if process.getFurnance().exhaustfanstatus() == True: process.getFurnance().exhaustfanoff()
             if process.getFurnance().exhaustValveStatus() != 2: process.getFurnance().exhaustValveClose()
             if process.getFurnance().freshairValveStatus() != 2: process.getFurnance().freshairValveClose()
