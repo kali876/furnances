@@ -1186,7 +1186,7 @@ def main():
         logger.info(f"Desired temperature : {desiredTemperature}")
         differenceTemperature = currentTemperature - desiredTemperature
 
-        if stepsLeft < 1:
+        if stepsLeft < 2:
             if differenceTemperature <= 0 and differenceTemperature > -3:
                 print("DO NOTHIK")
             elif differenceTemperature <= -3 and differenceTemperature >= -10:
