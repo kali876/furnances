@@ -5,7 +5,7 @@ import os
 import logging
 import logging.handlers as handlers
 import requests
-from main import Furnance
+#from main import Furnance
 
 os.chdir("/root/furnances")
 
