@@ -182,18 +182,18 @@ def pushnotifi(message):
         verify=False,
         timeout=10,
     )
-def setFurnanceFans(id):
-    furnance=Furnance(id)  #sprawdzić czy zmiana nazwy zmiennej wyeliminuje dublowanie się rządań do pieca.
-    curent_temp = furnance.getTemperature()
-    if curent_temp > 80:
-        furnance.exhaustValveOpen()
-        furnance.freshairValveOpen()
-        furnance.cyrcfanon()
-        furnance.exhaustfanon()
-    else:
-        furnance.heateroff()
-        furnance.cyrcfanoff()
-        furnance.exhaustfanoff()
+#def setFurnanceFans(id):
+ #   furnance=Furnance(id)  #sprawdzić czy zmiana nazwy zmiennej wyeliminuje dublowanie się rządań do pieca.
+ #   curent_temp = furnance.getTemperature()
+ #   if curent_temp > 80:
+ #       furnance.exhaustValveOpen()
+ #       furnance.freshairValveOpen()
+ #       furnance.cyrcfanon()
+ #       furnance.exhaustfanon()
+ #   else:
+ #       furnance.heateroff()
+ #       furnance.cyrcfanoff()
+ #       furnance.exhaustfanoff()
 
 
 def processchecker():
@@ -203,7 +203,7 @@ def processchecker():
         furnances=Furnances(file)
         process_already_exist = furnances.isProcessExist()
         if process_already_exist == False:
-            setFurnanceFans(furnances.getFurnance())
+            #setFurnanceFans(furnances.getFurnance())
             checked_cycle = furnances.getCheckedCycle()
             proces_start = furnances.getProcessStart()
             if proces_start == True and checked_cycle != None:
